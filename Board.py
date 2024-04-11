@@ -1,6 +1,10 @@
 class Board: # This class represents an entire Sudoku board. A Board object has 81 Cell objects.
     def __init__(self, width, height, screen, difficulty): # Constructor for the Board class, screen is a window from PyGame, difficulty is a variable to indicate if the user chose easy, medium, or hard.
-    
+        self.width = width
+        self.height = height
+        self.screen = screen
+        self.difficulty = difficulty
+
     def draw(self): # Draws an outline of the Sudoku grid, with bold lines to delineate the 3x3 boxes. Draws every cell on this board.
 
     def select(self, row, col): # Marks the cell at (row, col) in the board as the current selected cell. Once a cell has been selected, the user can edit its value or sketched value.

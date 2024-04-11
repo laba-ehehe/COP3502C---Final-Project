@@ -1,6 +1,10 @@
 class Cell: # This class represents a single cell in the Sudoku board. There are 81 Cells in a Board. 
     def __init__(self, value, row, col, screen):# Constructor for the Cell class
-    
+        self.value = value
+        self.row = row
+        self.col = col
+        self.screen = screen
+        
     def set_cell_value(self, value): # Setter for this cell’s value
 
     def set_sketched_value(self, value): # Setter for this cell’s sketched value

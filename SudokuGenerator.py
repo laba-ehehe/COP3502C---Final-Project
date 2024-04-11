@@ -1,7 +1,6 @@
 class SudokuGenerator:
     def __init__(self, row_length=9, removed_cells=20):
         self.size = row_length
-        self.board = [[0]*row_length for _ in range(row_length)]
         self.removed_cells = removed_cells
 
     def get_board(self): # Returns a 2D python list of numbers, which represents the board
