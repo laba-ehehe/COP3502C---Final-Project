@@ -6,7 +6,7 @@ from Board import Board
 # Define colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-LIGHTGRAY = (200, 200, 200)
+GRAY = (200, 200, 200)
 width, height = 600, 700
 
 def game_start():
