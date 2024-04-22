@@ -1,3 +1,5 @@
+import random
+
 class SudokuGenerator:
     def __init__(self, row_length=9, removed_cells=20):
         self.size = row_length
@@ -28,7 +30,7 @@ class SudokuGenerator:
         return self.valid_in_row(row, num) and self.valid_in_col(col, num) and self.valid_in_box(row - row % 3, col - col % 3, num)
 
     def fill_box(self, row_start, col_start): # Randomly fills in values in the 3x3 box from (row_start, col_start) to (row_start+2, col_start+2). Uses unused_in_box to ensure no value occurs in the box more than once.
-        núm = [n for n in range(1, 10)]
+        nums = [n for n in range(1, 10)]
         random.shuffle(nums)
         for i in range(3):
             for j in range(3):
@@ -73,6 +75,7 @@ class SudokuGenerator:
         self.fill_remaining(0, self.box_length)
 
     def remove_cells(self): # This method removes the appropriate number of cells from the board
+
 
 def generate_sudoku(size, removed): # Given size and removed, this function generates and returns a size-by-size sudoku board.
     sudoku = SudokuGenerator(size, removed)

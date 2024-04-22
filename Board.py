@@ -127,12 +127,12 @@ class Board: # This class represents an entire Sudoku board. A Board object has 
                     return False
 
         for index in range(0, 9):
-            counter = 0
+            count = 0
             # Makes a temporary list for all ints in each col.
             temp_col = []
-            while counter < 9:
-                temp_col.append(self.board[counter][index])
-                counter += 1
+            while count < 9:
+                temp_col.append(self.board[count][index])
+                count += 1
             # Checks temp_col for each single digit int.
             for num in range(1, 10):
                 if num not in temp_col:
@@ -141,8 +141,7 @@ class Board: # This class represents an entire Sudoku board. A Board object has 
             # by using increments of 3 we can evaluate the boxes as boxes!
             for col in range(0, 9, 3):
                 # turning it into a matter of boxes we can check the final win condition all at once!
-                box = (self.board[row][col:col + 3] + self.board[row + 1][col:col + 3] + self.board[row + 2][
-                                                                                         col:col + 3])
+                box = (self.board[row][col:col + 3] + self.board[row + 1][col:col + 3] + self.board[row + 2][col:col + 3])
                 if len(set(box)) != 9:
                     return False
         return True

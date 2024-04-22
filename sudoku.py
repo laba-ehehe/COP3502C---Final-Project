@@ -1,9 +1,13 @@
-import pygame, sys
+import pygame
+import sys
+from SudokuGenerator import generate_sudoku
 from Board import Board
 
+# Define colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-width, height = 600, 700
+LIGHTGRAY = (200, 200, 200)
+width, height = 600, 650
 
 def game_start():
     # screen, caption, background
@@ -98,7 +102,7 @@ def game_over():
                     # Calls Board class to create a new current_board.
                     current_board = Board(600, 700, screen, difficulty)
                     current_board.draw()
-                    create_in_game_buttons(screen)
+                    buttons(screen)
                     pygame.display.update()
                     break
 
