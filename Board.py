@@ -1,3 +1,6 @@
+import pygame, sys
+from const import *
+
 class Board: # This class represents an entire Sudoku board. A Board object has 81 Cell objects.
     def __init__(self, width, height, screen, difficulty): # Constructor for the Board class, screen is a window from PyGame, difficulty is a variable to indicate if the user chose easy, medium, or hard.
         self.width = width
@@ -5,7 +8,23 @@ class Board: # This class represents an entire Sudoku board. A Board object has 
         self.screen = screen
         self.difficulty = difficulty
 
+        pygame.init()
+        screen.pygame.display.set_mode(WIDTH, HEIGHT)
+        pygame.display.set_caption('SUDOKU')
+
+        screen.fill(WHITE)
+
     def draw(self): # Draws an outline of the Sudoku grid, with bold lines to delineate the 3x3 boxes. Draws every cell on this board.
+        # draw horizontal lines
+        for i in range(1, BOARD_ROWS):
+            pygame.draw.line(screen, BLACK, (0, i * SQUARE_SIZE), (WIDTH, i * SQUARE_SIZE), LINE_WIDTH)
+        # draw vertical lines
+        for i in range(1, BOARD_COLS):
+            pygame.draw.line(screen, BLACK, (i * SQUARE_SIZE, 0),(i * SQUARE_SIZE, HEIGHT), LINE_WIDTH)
+
+        for i in range(self.rows):
+            for j in range(self.cols):
+                self.cells[i][j].draw(self.screen)
 
     def select(self, row, col): # Marks the cell at (row, col) in the board as the current selected cell. Once a cell has been selected, the user can edit its value or sketched value.
     

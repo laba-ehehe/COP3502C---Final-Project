@@ -1,3 +1,5 @@
+import random
+
 class SudokuGenerator:
     def __init__(self, row_length=9, removed_cells=20):
         self.size = row_length
