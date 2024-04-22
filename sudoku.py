@@ -6,10 +6,12 @@ BLACK = (0, 0, 0)
 width, height = 600, 700
 
 def game_start():
+    # screen, caption, background
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption('( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)')
     screen.fill((255, 255, 255))
 
+    # title, game modes
     title_surface = start_title_font.render('Sudoku', 0, BLACK)
     title_rectangle = title_surface.get_rect(center=(width // 2, height // 2 - 200))
     screen.blit(title_surface, title_rectangle)
@@ -18,10 +20,12 @@ def game_start():
     game_rectangle = game_surface.get_rect(center=(width // 2, height // 2 + 50))
     screen.blit(game_surface, game_rectangle)
 
+    # game modes text
     easy_text = button_font.render('Easy', 0, WHITE)
     medium_text = button_font.render('Medium', 0, WHITE)
     hard_text = button_font.render('Hard', 0, WHITE)
 
+    # game modes button
     easy_surface = pygame.Surface((easy_text.get_size()[0] + 20, easy_text.get_size()[1] + 20))
     easy_surface.fill(BLACK)
     easy_surface.blit(easy_text, (10, 10))
@@ -42,6 +46,7 @@ def game_start():
     screen.blit(medium_surface, medium_rectangle)
     screen.blit(hard_surface, hard_rectangle)
 
+    # get actions from the player
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -54,24 +59,24 @@ def game_start():
                 elif hard_rectangle.collidepoint(event.pos):
                     return 'HARD'
 
-        pygame.display.update()
+        pygame.display.update() # update display
 
 
 def game_over():
+    # screen, caption, background
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption('( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)')
     screen.fill(WHITE)
 
+    # title, game over message
     title_surface = start_title_font.render('Game Over :(', 0, BLACK)
     title_rectangle = title_surface.get_rect(center=(width // 2, height // 2 - 150))
     screen.blit(title_surface, title_rectangle)
 
-    restart_text = button_font.render('RESTART', 0, colour1)
-
-    # same concept as the main menu screen, but implementing it into a game over!
+    restart_text = button_font.render('RESTART', 0, WHITE)
 
     restart_surface = pygame.Surface((restart_text.get_size()[0] + 20, restart_text.get_size()[1] + 20))
-    restart_surface.fill(colour2)
+    restart_surface.fill(BLACK)
     restart_surface.blit(restart_text, (10, 10))
 
     restart_rectangle = restart_surface.get_rect(center=(width // 2, height // 2 + 100))
@@ -80,55 +85,48 @@ def game_over():
 
     pygame.display.update()
 
-    # while loop to make the screen actually stay instead of vanishing and it waits until player selects an option
-    keep_going = True
-    while keep_going:
-        # Exits program.
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            # Captures restart selection.
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if restart_rectangle.collidepoint(event.pos):
-                    # Creates a new object and resets screen display.
+                if restart_rectangle.collidepoint(event.pos): # resets screen display.
                     difficulty = game_start()
-                    screen = pygame.display.set_mode((600, 650))
-                    pygame.display.set_caption('Sudoku')
-                    screen.fill([255, 255, 245])
+                    screen = pygame.display.set_mode((600, 700))
+                    pygame.display.set_caption('( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)')
+                    screen.fill(WHITE)
                     # Calls Board class to create a new current_board.
-                    current_board = Board(600, 600, screen, difficulty)
+                    current_board = Board(600, 700, screen, difficulty)
                     current_board.draw()
                     create_in_game_buttons(screen)
                     pygame.display.update()
-                    # Exits loop.
-                    keep_going = False
+                    break
 
 
 def game_win():
-    screen = pygame.display.set_mode((600, 650))
+    # screen, caption, background
+    screen = pygame.display.set_mode((600, 700))
     pygame.display.set_caption('( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)')
-    screen.fill(colour1)
+    screen.fill(WHITE)
 
-    # default background initi.
-
-    title_surface = start_title_font.render('Game Won!', 0, colour2)
+    # title, game won & exit message
+    title_surface = start_title_font.render('Game Won!', 0, BLACK)
     title_rectangle = title_surface.get_rect(center=(width // 2, height // 2 - 150))
     screen.blit(title_surface, title_rectangle)
 
-    exit_text = button_font.render('EXIT', 0, colour1)
-    # All concepts taken from lecture videos.
+    exit_text = button_font.render('EXIT', 0, WHITE)
+
     exit_surface = pygame.Surface((exit_text.get_size()[0] + 20, exit_text.get_size()[1] + 20))
-    exit_surface.fill(colour2)
+    exit_surface.fill(BLACK)
     exit_surface.blit(exit_text, (10, 10))
 
     exit_rectangle = exit_surface.get_rect(center=(width // 2, height // 2 + 100))
 
     screen.blit(exit_surface, exit_rectangle)
-    # Updates the display.
+
     pygame.display.update()
 
-    while True:
-        # While loop will continue until the program closes.
+    while True: # continue until the program closes
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -142,7 +140,7 @@ def buttons(screen):
     in_game_button_font = pygame.font.Font(None, 25)
 
     # Creates the reset button.
-    reset_text = in_game_button_font.render('RESET', 0, colour1)
+    reset_text = in_game_button_font.render('RESET', 0, WHITE)
     reset_surface = pygame.Surface((65, 31))
     reset_surface.fill(colour2)
     reset_surface.blit(reset_text, (5, 5))
@@ -150,7 +148,7 @@ def buttons(screen):
     screen.blit(reset_surface, reset_rectangle)
 
     # Creates the restart button.
-    restart_text = in_game_button_font.render('RESTART', 0, colour1)
+    restart_text = in_game_button_font.render('RESTART', 0, WHITE)
     restart_surface = pygame.Surface((85, 31))
     restart_surface.fill(colour2)
     restart_surface.blit(restart_text, (5, 5))
@@ -158,7 +156,7 @@ def buttons(screen):
     screen.blit(restart_surface, restart_rectangle)
 
     # Creates the exit button.
-    exit_text = in_game_button_font.render('EXIT', 0, colour1)
+    exit_text = in_game_button_font.render('EXIT', 0, WHITE)
     exit_surface = pygame.Surface((50, 31))
     exit_surface.fill(colour2)
     exit_surface.blit(exit_text, (5, 5))
@@ -174,11 +172,11 @@ start_title_font = pygame.font.Font(None, 100)
 game_font = pygame.font.Font(None, 80)
 button_font = pygame.font.Font(None, 70)
 # Calls start menu and the selected difficulty level is returned.
-difficulty = draw_game_start()
+difficulty = game_start()
 # Creates screen, adds caption, and fills with a white background.
-screen = pygame.display.set_mode((600, 650))
-pygame.display.set_caption('Sudoku')
-screen.fill([255, 255, 245])
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption('( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)')
+screen.fill(WHITE)
 # Calls Board class to create current_board.
 current_board = Board(600, 600, screen, difficulty)
 # Draws current_board.
@@ -194,7 +192,7 @@ while True:
             sys.exit()
         # Addresses mouse button down events.
         if event.type == pygame.MOUSEBUTTONDOWN:
-            screen.fill([255, 255, 245])
+            screen.fill(WHITE)
             current_board.draw()
             x, y = event.pos
             # Exits the game if exit is pressed.
@@ -204,7 +202,7 @@ while True:
             # Restarts the game menu and initial steps if restart is selected.
             elif 257.5 <= x <= 347.5 and 614.5 <= y <= 645.5:
                 difficulty = draw_game_start()
-                screen = pygame.display.set_mode((600, 650))
+                screen = pygame.display.set_mode((width, height))
                 pygame.display.set_caption('Sudoku')
                 screen.fill([255, 255, 245])
                 # Calls Board class to create a new current_board.
@@ -236,7 +234,7 @@ while True:
             try:
                 if event.key == pygame.K_BACKSPACE:
                     current_board.clear()
-                    screen.fill([255, 255, 245])
+                    screen.fill(WHITE)
                     current_board.draw()
                     create_in_game_buttons(screen)
                     pygame.display.update()
@@ -247,7 +245,7 @@ while True:
                     current_board.sketch(guess)
                     current_board.place_number(guess)
                     current_board.update_board()
-                    screen.fill([255, 255, 245])
+                    screen.fill(WHITE)
                     current_board.draw()
                     create_in_game_buttons(screen)
                     pygame.display.update()
@@ -263,9 +261,9 @@ while True:
             else:
                 # Calls game over function and initiates new game.
                 draw_game_over()
-                screen = pygame.display.set_mode((600, 650))
+                screen = pygame.display.set_mode((width, height))
                 pygame.display.set_caption('Sudoku')
-                screen.fill([255, 255, 245])
+                screen.fill(WHITE)
                 # Calls Board class to create a new current_board.
                 current_board = Board(600, 600, screen, difficulty)
                 current_board.draw()
