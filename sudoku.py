@@ -7,7 +7,7 @@ from Board import Board
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 LIGHTGRAY = (200, 200, 200)
-width, height = 600, 650
+width, height = 600, 700
 
 def game_start():
     # screen, caption, background
