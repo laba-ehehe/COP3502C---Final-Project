@@ -203,7 +203,7 @@ while True:
             elif 257.5 <= x <= 347.5 and 614.5 <= y <= 645.5:
                 difficulty = game_start()
                 screen = pygame.display.set_mode((width, height))
-                pygame.display.set_caption('Sudoku')
+                pygame.display.set_caption('( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)')
                 screen.fill([255, 255, 245])
                 # Calls Board class to create a new current_board.
                 current_board = Board(600, 600, screen, difficulty)
@@ -262,7 +262,7 @@ while True:
                 # Calls game over function and initiates new game.
                 game_over()
                 screen = pygame.display.set_mode((width, height))
-                pygame.display.set_caption('Sudoku')
+                pygame.display.set_caption('( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)')
                 screen.fill(WHITE)
                 # Calls Board class to create a new current_board.
                 current_board = Board(600, 600, screen, difficulty)
