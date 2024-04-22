@@ -1,13 +1,16 @@
 import pygame
+import sys
+from SudokuGenerator import generate_sudoku
+from Board import Board
 from Cell import Cell
-from SudokuGenerator import SudokuGenerator
-import copy
 
 SIDE = 600
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 PINK = (213, 100, 124)
+BOLD = 13
+LIGHT = 10
 
 pygame.init()
 
@@ -47,15 +50,15 @@ class Board: # This class represents an entire Sudoku board. A Board object has 
 
         for i in range(0, 10): # draw horizontal lines
             if i & 3 == 0:
-                pygame.draw.line(self.screen, (0, 0, 0), (0, i * (600 / 9)), (600, i * (600 / 9)), 15)
+                pygame.draw.line(self.screen, BLACK, (0, i * (SIDE / 9)), (SIDE, i * (SIDE / 9)), BOLD)
             else:
-                pygame.draw.line(self.screen, (0, 0, 0), (0, i * (600 / 9)), (600, i * (600 / 9)), 10)
+                pygame.draw.line(self.screen, BLACK, (0, i * (SIDE / 9)), (SIDE, i * (SIDE / 9)), LIGHT)
 
         for i in range(0, 10): # draw vertical lines
             if i & 3 == 0:
-                pygame.draw.line(self.screen, (0, 0, 0), (i * (600 / 9), 0), (i * (600 / 9), 600), 15)
+                pygame.draw.line(self.screen, BLACK, (i * (SIDE / 9), 0), (i * (SIDE / 9), SIDE), BOLD)
             else:
-                pygame.draw.line(self.screen, (0, 0, 0), (i * (600 / 9), 0), (i * (600 / 9), 600), 10)
+                pygame.draw.line(self.screen, BLACK, (i * (SIDE / 9), 0), (i * (SIDE / 9), SIDE), LIGHT)
 
         for row in self.hehe: # draw cells
             for cell in row:
@@ -63,17 +66,17 @@ class Board: # This class represents an entire Sudoku board. A Board object has 
 
     def select(self, row, col): # Marks the cell at (row, col) in the board as the current selected cell. Once a cell has been selected, the user can edit its value or sketched value.
         # draw border around selected cell
-        pygame.draw.line(self.screen, (213, 100, 124), (row * (600 / 9), col * (600 / 9)), (row * (600 / 9), (col + 1) * (600 / 9)), 5)
-        pygame.draw.line(self.screen, (213, 100, 124), (row * (600 / 9), (col + 1) * (600 / 9)), ((row + 1) * (600 / 9), (col + 1) * (600 / 9)), 5)
-        pygame.draw.line(self.screen, (213, 100, 124), ((row + 1) * (600 / 9), col * (600 / 9)), ((row + 1) * (600 / 9), (col + 1) * (600 / 9)), 5)
-        pygame.draw.line(self.screen, (213, 100, 124), (row * (600 / 9), col * (600 / 9)), ((row + 1) * (600 / 9), col * (600 / 9)), 5)
+        pygame.draw.line(self.screen, PINK, (row * (SIDE / 9), col * (SIDE / 9)), (row * (SIDE / 9), (col + 1) * (SIDE / 9)), LIGHT)
+        pygame.draw.line(self.screen, PINK, (row * (SIDE / 9), (col + 1) * (SIDE / 9)), ((row + 1) * (SIDE / 9), (col + 1) * (SIDE / 9)), LIGHT)
+        pygame.draw.line(self.screen, PINK, ((row + 1) * (SIDE / 9), col * (SIDE / 9)), ((row + 1) * (SIDE / 9), (col + 1) * (SIDE / 9)), LIGHT)
+        pygame.draw.line(self.screen, PINK, (row * (SIDE / 9), col * (SIDE / 9)), ((row + 1) * (SIDE / 9), col * (SIDE / 9)), LIGHT)
 
         self.selected = self.hehe[row][col] # assign selected_cell
 
     def click(self, x, y): # If a tuple of (x, y) coordinates is within the displayed board, this function returns a tuple of the (row, col) of the cell which was clicked. Otherwise, this function returns None.
-        if 0 <= x <= 600 and 0 <= y <= 600:
-            row = int(x // (600 / 9))
-            col = int(y // (600 / 9))
+        if 0 <= x <= SIDE and 0 <= y <= SIDE:
+            row = int(x // (SIDE / 9))
+            col = int(y // (SIDE / 9))
             return (row, col)
         else:
             return None
@@ -134,11 +137,14 @@ class Board: # This class represents an entire Sudoku board. A Board object has 
                 temp_col.append(self.board[count][index])
                 count += 1
             # Checks temp_col for each single digit int.
+
             for num in range(1, 10):
                 if num not in temp_col:
                     return False
+
         for row in range(0, 9, 3):
             # by using increments of 3 we can evaluate the boxes as boxes!
+
             for col in range(0, 9, 3):
                 # turning it into a matter of boxes we can check the final win condition all at once!
                 box = (self.board[row][col:col + 3] + self.board[row + 1][col:col + 3] + self.board[row + 2][col:col + 3])
