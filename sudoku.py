@@ -142,7 +142,7 @@ def buttons(screen):
     # Creates the reset button.
     reset_text = in_game_button_font.render('RESET', 0, WHITE)
     reset_surface = pygame.Surface((65, 31))
-    reset_surface.fill(colour2)
+    reset_surface.fill(BLACK)
     reset_surface.blit(reset_text, (5, 5))
     reset_rectangle = reset_surface.get_rect(center=(200, 630))
     screen.blit(reset_surface, reset_rectangle)
@@ -150,7 +150,7 @@ def buttons(screen):
     # Creates the restart button.
     restart_text = in_game_button_font.render('RESTART', 0, WHITE)
     restart_surface = pygame.Surface((85, 31))
-    restart_surface.fill(colour2)
+    restart_surface.fill(BLACK)
     restart_surface.blit(restart_text, (5, 5))
     restart_rectangle = restart_surface.get_rect(center=(300, 630))
     screen.blit(restart_surface, restart_rectangle)
@@ -158,7 +158,7 @@ def buttons(screen):
     # Creates the exit button.
     exit_text = in_game_button_font.render('EXIT', 0, WHITE)
     exit_surface = pygame.Surface((50, 31))
-    exit_surface.fill(colour2)
+    exit_surface.fill(BLACK)
     exit_surface.blit(exit_text, (5, 5))
     exit_rectangle = exit_surface.get_rect(center=(400, 630))
     screen.blit(exit_surface, exit_rectangle)
@@ -181,7 +181,7 @@ screen.fill(WHITE)
 current_board = Board(600, 600, screen, difficulty)
 # Draws current_board.
 current_board.draw()
-create_in_game_buttons(screen)
+buttons(screen)
 
 # Loop used to evaluate events.
 while True:
@@ -201,21 +201,21 @@ while True:
                 sys.exit()
             # Restarts the game menu and initial steps if restart is selected.
             elif 257.5 <= x <= 347.5 and 614.5 <= y <= 645.5:
-                difficulty = draw_game_start()
+                difficulty = game_start()
                 screen = pygame.display.set_mode((width, height))
                 pygame.display.set_caption('Sudoku')
                 screen.fill([255, 255, 245])
                 # Calls Board class to create a new current_board.
                 current_board = Board(600, 600, screen, difficulty)
                 current_board.draw()
-                create_in_game_buttons(screen)
+                buttons(screen)
                 pygame.display.update()
             # Calls method to replace current list of cells with original version.
             elif 167.5 <= x <= 232.5 and 614.5 <= y <= 645.5:
                 current_board.reset_to_original()
                 screen.fill([255, 255, 245])
                 current_board.draw()
-                create_in_game_buttons(screen)
+                buttons(screen)
                 pygame.display.update()
             # Addresses other clicks.
             else:
@@ -223,7 +223,7 @@ while True:
                 try:
                     coordinates = current_board.click(x, y)
                     current_board.select(coordinates[0], coordinates[1])
-                    create_in_game_buttons(screen)
+                    buttons(screen)
                     pygame.display.update()
                 # Otherwise, takes no action.
                 except:
@@ -236,7 +236,7 @@ while True:
                     current_board.clear()
                     screen.fill(WHITE)
                     current_board.draw()
-                    create_in_game_buttons(screen)
+                    buttons(screen)
                     pygame.display.update()
                 # If 1-9 is pressed for a valid cell, board, list, and screen display are updated.
                 # For any input using pygame and a number it will be inputted into the cell
@@ -247,7 +247,7 @@ while True:
                     current_board.update_board()
                     screen.fill(WHITE)
                     current_board.draw()
-                    create_in_game_buttons(screen)
+                    buttons(screen)
                     pygame.display.update()
             # If a number is pressed for a valid cell, board, list, and screen display are updated.
             except:
@@ -257,15 +257,15 @@ while True:
         if current_board.is_full():
             # Credit to OH TA Wednesday 3:22 ET for debugging. Originally missing "()".
             if current_board.check_board():
-                draw_game_win()
+                game_win()
             else:
                 # Calls game over function and initiates new game.
-                draw_game_over()
+                game_over()
                 screen = pygame.display.set_mode((width, height))
                 pygame.display.set_caption('Sudoku')
                 screen.fill(WHITE)
                 # Calls Board class to create a new current_board.
                 current_board = Board(600, 600, screen, difficulty)
                 current_board.draw()
-                create_in_game_buttons(screen)
+                buttons(screen)
                 pygame.display.update()
