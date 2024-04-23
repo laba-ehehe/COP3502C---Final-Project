@@ -7,6 +7,7 @@ class Cell: # This class represents a single cell in the Sudoku board. There are
         self.row = row
         self.col = col
         self.screen = screen
+        self.size
         self.rect = pygame.Rect(50 + col * 50, 50 + row * 50, 50, 50)
         self.is_given = True if value != 0 else False
         self.font = pygame.font.Font(None, 36)  # Font for displaying text

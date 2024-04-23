@@ -5,7 +5,7 @@ GRAY = (200, 200, 200)
 PINK = (254, 127, 156)
 
 # Dimensions
-width, height = 600, 650
+width, height = 600, 600
 
 # Line thickness
 LIGHT = 10
