@@ -45,31 +45,49 @@ class SudokuGenerator:
             self.fill_box(i, i)
 
     def fill_remaining(self, row, col): # This will return a completely filled board (the Sudoku solution).
-        if (col >= self.row_length and row < self.row_length - 1):
+        if col >= self.row_length and row < self.row_length - 1:
             row += 1
             col = 0
         if row >= self.row_length and col >= self.row_length:
             return True
-        if row < self.box_length:
-            if col < self.box_length:
-                col = self.box_length
-        elif row < self.row_length - self.box_length:
-            if col == int(row // self.box_length * self.box_length):
-                col += self.box_length
+        if row < 3:
+            if col < 3:
+                col = 3
+        elif row < self.row_length - 3:
+            if col == int(row // 3) * 3:
+                col += 3
         else:
-            if col == self.row_length - self.box_length:
+            if col == self.row_length - 3:
                 row += 1
                 col = 0
                 if row >= self.row_length:
                     return True
-        
-        for num in range(1, self.row_length + 1):
-            if self.is_valid(row, col, num):
-                self.board[row][col] = num
-                if self.fill_remaining(row, col + 1):
-                    return True
-                self.board[row][col] = 0
-        return False
+
+        # if (col >= self.row_length and row < self.row_length - 1):
+        #     row += 1
+        #     col = 0
+        # if row >= self.row_length and col >= self.row_length:
+        #     return True
+        # if row < self.box_length:
+        #     if col < self.box_length:
+        #         col = self.box_length
+        # elif row < self.row_length - self.box_length:
+        #     if col == int(row // self.box_length * self.box_length):
+        #         col += self.box_length
+        # else:
+        #     if col == self.row_length - self.box_length:
+        #         row += 1
+        #         col = 0
+        #         if row >= self.row_length:
+        #             return True
+        #
+        # for num in range(1, self.row_length + 1):
+        #     if self.is_valid(row, col, num):
+        #         self.board[row][col] = num
+        #         if self.fill_remaining(row, col + 1):
+        #             return True
+        #         self.board[row][col] = 0
+        # return False
     
     def fill_values(self): # It constructs a solution by calling fill_diagonal and fill_remaining.
         self.fill_diagonal()

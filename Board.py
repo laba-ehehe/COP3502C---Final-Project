@@ -1,4 +1,5 @@
 import pygame
+import copy
 from SudokuGenerator import generate_sudoku
 from Cell import Cell
 from const import *
@@ -24,6 +25,7 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
         self.cell = []
         self.original = []
         self.selected = None
+        self.test_board = copy.deepcopy(self.board)
 
         for row_index, row_value in enumerate(self.board):
             current_row = []
@@ -38,14 +40,27 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
             self.original.append(current_row)
 
     def draw(self):  # Draws an outline of the Sudoku grid, with bold lines to delineate the 3x3 boxes. Draws every cell on this board.
-        cell_size = width // 9
+        # cell_size = width // 9
 
-        for i in range(10):
-            line_width = BOLD if i % 3 == 0 else LIGHT
-            # pygame.draw.line(self.screen, BLACK, (0, i * (self.height / 9)), (self.width, i * (self.height / 9)), line_width)
-            # pygame.draw.line(self.screen, BLACK, (i * (self.width / 9), 0), (i * (self.width / 9), self.height), line_width)
-            pygame.draw.line(self.screen, BLACK, (0, i * cell_size), (width, i * cell_size), line_width)
-            pygame.draw.line(self.screen, BLACK, (i * cell_size, 0), (i * cell_size, height), line_width)
+        # for i in range(10):
+            # line_width = BOLD if i % 3 == 0 else LIGHT
+            # # pygame.draw.line(self.screen, BLACK, (0, i * (self.height / 9)), (self.width, i * (self.height / 9)), line_width)
+            # # pygame.draw.line(self.screen, BLACK, (i * (self.width / 9), 0), (i * (self.width / 9), self.height), line_width)
+            # pygame.draw.line(self.screen, BLACK, (0, i * cell_size), (width, i * cell_size), line_width)
+            # pygame.draw.line(self.screen, BLACK, (i * cell_size, 0), (i * cell_size, height), line_width)
+
+        for i in range(0, 10):  # draw vertical lines, every 3rd bold
+            if i % 3 == 0:
+                pygame.draw.line(self.screen, BLACK, (i * (width / 9), 0), (i * (width / 9), width), BOLD)
+            else:
+                pygame.draw.line(self.screen, BLACK, (i * (width / 9), 0), (i * (width / 9), width), LIGHT)
+
+            # draws the horizontal lines every 3rd bolded
+        for j in range(0, 10):  # draw horizontal lines, every 3rd bold
+            if j % 3 == 0:
+                pygame.draw.line(self.screen, BLACK, (0, j * (width / 9)), (width, j * (width / 9)), BOLD)
+            else:
+                pygame.draw.line(self.screen, BLACK, (0, j * (width / 9)), (width, j * (width / 9)), LIGHT)
 
         for row in self.cell: # draw cells
             for cell in row:
@@ -70,12 +85,18 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
             self.selected.value = 0
 
     def sketch(self, value):  # Sets the sketched value of the current selected cell equal to user entered value. It will be displayed at the top left corner of the cell using the draw() function.
-        if self.selected.is_given == False:
-            self.selected.set_sketched_value(value)
+        try:
+            if self.selected.can_be_cleared:
+                self.selected.set_sketched_value(value)
+        except:
+            pass
 
     def place_number(self, value):  # Sets the value of the current selected cell equal to user entered value. Called when the user presses the Enter key.
-        if self.selected.is_given == False:
-            self.selected.set_value(value)
+        try:
+            if self.selected.can_be_cleared:
+                self.selected.set_cell_value(value)
+        except:
+            pass
 
     def reset_to_original(self):  # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit).
         self.cell = self.original
@@ -96,36 +117,59 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
         empty_found = False
         x, y = 0, 0
 
-        for i in range(9):
-            for j in range(9):
-                if self.cell[i][j].value == 0:
-                    x = i
-                    y = j
+        for row in range(9):
+            for col in range(9):
+                if self.cell[row][col].value == 0:
+                    x = self.cell[row][col].row
+                    y = self.cell[row][col].col
                     empty_found = True
-                    break
 
-        if empty_found:
+        if empty_found == True:
             return (x, y)
         else:
             return None
 
     def check_board(self):  # Check whether the board is solved correctly
-        # Check rows
-        for row in self.board:
-            if len(set([x for x in row if x != 0])) != 9:
-                return False
+        # # Check rows
+        # for row in self.board:
+        #     if len(set([x for x in row if x != 0])) != 9:
+        #         return False
+        #
+        # # Check columns
+        # for col in range(9):
+        #     column = [self.board[row][col] for row in range(9)]
+        #     if len(set([x for x in column if x != 0])) != 9:
+        #         return False
+        #
+        # # Check cells
+        # for row in range(0, 9, 3):
+        #     for col in range(0, 9, 3):
+        #         box = [self.board[i][j] for i in range(row, row + 3) for j in range(col, col + 3)]
+        #         if len(set([x for x in box if x != 0])) != 9:
+        #             return False
+        #
+        # return True
 
-        # Check columns
-        for col in range(9):
-            column = [self.board[row][col] for row in range(9)]
-            if len(set([x for x in column if x != 0])) != 9:
-                return False
-
-        # Check cells
-        for row in range(0, 9, 3):
-            for col in range(0, 9, 3):
-                box = [self.board[i][j] for i in range(row, row + 3) for j in range(col, col + 3)]
-                if len(set([x for x in box if x != 0])) != 9:
+        for row in self.board: # check if all rows contain number 1-9
+            for num in range(1, 10):
+                if num not in row:
                     return False
 
+        for index in range(0, 9): # check if all cols contain number 1-9
+            count = 0
+            temp = []
+
+            while count < 9:
+                temp.append(self.board[count][index])
+                count += 1
+
+            for num in range(1, 10): # check temp col for number 1-9
+                if num not in temp:
+                    return False
+
+        for row in range(0, 9, 3): # check each 3x3 box
+            for col in range(0, 9, 3):
+                box = (self.board[row][col:col + 3] + self.board[row + 1][col:col + 3] + self.board[row + 2][col:col + 3])
+                if len(set(box)) != 9:
+                    return False
         return True

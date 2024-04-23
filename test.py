@@ -3,7 +3,7 @@ import sys
 from Board import Board
 from const import *
 
-pygame.init()
+# pygame.init()
 
 
 def game_start():

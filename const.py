@@ -8,5 +8,5 @@ PINK = (254, 127, 156)
 width, height = 600, 700
 
 # Line thickness
-LIGHT = 10
-BOLD = 15
+LIGHT = 8
+BOLD = 12
