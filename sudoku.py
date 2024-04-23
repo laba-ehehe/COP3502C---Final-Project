@@ -13,7 +13,7 @@ def game_start():
     screen.fill(WHITE)
 
     # title, game modes
-    title_surface = start_title_font.render('Sudoku', 0, BLACK)
+    title_surface = start_title_font.render('SUDOKU', 0, BLACK)
     title_rectangle = title_surface.get_rect(center=(width // 2, height // 2 - 200))
     screen.blit(title_surface, title_rectangle)
 
