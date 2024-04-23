@@ -4,135 +4,129 @@ import math
 
 class SudokuGenerator:
     def __init__(self, row_length, removed_cells):
-        # Initializes object by assigning passed in parameters.
         self.row_length = row_length
         self.removed_cells = removed_cells
         self.board = []
-        row_count, col_count = row_length, row_length
-        # Creates a 2D list using assigned counting variables to conform with the row length.
-        while row_count > 0:
-            new_row = []
-            while col_count > 0:
-                # Appends nine zeros in the row.
-                new_row.append(0)
-                col_count -= 1
-            # Appends nine rows into list.
-            self.board.append(new_row)
-            col_count = row_length
-            row_count -= 1
-        # calculate the square root of the length.
         self.box_length = int(math.sqrt(row_length))
 
+        row_count, col_count = row_length, row_length
+
+        # Create a list represent Sudoku board with all values set to 0
+        while row_count > 0:
+            new = []
+            while col_count > 0:
+                new.append(0)
+                col_count -= 1
+            self.board.append(new)
+            col_count = row_length
+            row_count -= 1
+
     def get_board(self):
-        # Returns current board.
         return self.board
 
     def print_board(self):
-        # Prints each row of the 2D list individually to conform with visual expectations.
         for index, item in enumerate(self.board):
             print(self.board[index])
 
-    def valid_in_row(self, row, num):
-        # Uses a for loop to compare num with other integers in the list.
+    def valid_in_row(self, row, num): # Invalid if a match is found in row
         for i in self.board[row]:
             if i == num:
-                # Returns False if a match is found.
                 return False
         return True
 
-    def valid_in_col(self, col, num):
-        # Assigns a counter to ensure nine loops occur.
-        counter = 0
-        while counter < 9:
-            # Compares passed in number to each element of the list.
-            if self.board[counter][col] == num:
+
+    def valid_in_col(self, col, num): # Invalid if a match is found in col
+        count = 0
+        while count < 9:
+            if self.board[count][col] == num:
                 return False
-            counter += 1
-        # Returns true if number is unique.
+            count += 1
         return True
 
-    def valid_in_box(self, row_start, col_start, num):
-        # Searches for num in subsections of rows and columns that correspond with each box.
+    def valid_in_box(self, row_start, col_start, num): # Invalid if a match is found in box
         for r in self.board[int(row_start):int(row_start) + 3]:
             if num in r[int(col_start):int(col_start) + 3]:
                 return False
         return True
 
     def is_valid(self, row, col, num):
-        # Returns False if not valid in row.
-        if not self.valid_in_row(row, num):
+        # Returns False if not valid in row or col
+        if not self.valid_in_row(row, num) or not self.valid_in_col(col, num):
             return False
-        # Returns False if not valid in col.
-        if not self.valid_in_col(col, num):
+
+        row_start_ind = row // 3 * 3
+        col_start_ind = col // 3 * 3
+
+        if not self.valid_in_box(row_start_ind, col_start_ind, num):
             return False
-        if 0 <= row <= 2:
-            if 0 <= col <= 2:
-                # Top left.
-                row_ind = 0
-                col_ind = 0
-            elif 3 <= col <= 5:
-                # Top middle.
-                row_ind = 0
-                col_ind = 3
-            else:
-                # Top right.
-                row_ind = 0
-                col_ind = 6
-        elif 3 <= row <= 5:
-            if 0 <= col <= 2:
-                # Middle left.
-                row_ind = 3
-                col_ind = 0
-            elif 3 <= col <= 5:
-                # Middle middle.
-                row_ind = 3
-                col_ind = 3
-            else:
-                # middle right.
-                row_ind = 3
-                col_ind = 6
-        else:
-            # Bottom left.
-            if 0 <= col <= 2:
-                row_ind = 6
-                col_ind = 0
-            # Bottom middle.
-            elif 3 <= col <= 5:
-                row_ind = 6
-                col_ind = 3
-            # Bottom right.
-            else:
-                row_ind = 6
-                col_ind = 6
-        if not self.valid_in_box(row_ind, col_ind, num):
-            return False
-        # Returns True if all tests pass.
-        else:
-            return True
+        return True # all tests passed
+
+        # Assigns row_ind and col_ind based on which box the cell is located in.
+        # Credit to A.Sarmiento for explaining that I needed to convert row and col to starting box indices.
+        # if 0 <= row <= 2:
+        #     if 0 <= col <= 2:
+        #         # Top left.
+        #         row_ind = 0
+        #         col_ind = 0
+        #     elif 3 <= col <= 5:
+        #         # Top middle.
+        #         row_ind = 0
+        #         col_ind = 3
+        #     else:
+        #         # Top right.
+        #         row_ind = 0
+        #         col_ind = 6
+        # elif 3 <= row <= 5:
+        #     if 0 <= col <= 2:
+        #         # Middle left.
+        #         row_ind = 3
+        #         col_ind = 0
+        #     elif 3 <= col <= 5:
+        #         # Middle middle.
+        #         row_ind = 3
+        #         col_ind = 3
+        #     else:
+        #         # middle right.
+        #         row_ind = 3
+        #         col_ind = 6
+        # else:
+        #     # Bottom left.
+        #     if 0 <= col <= 2:
+        #         row_ind = 6
+        #         col_ind = 0
+        #     # Bottom middle.
+        #     elif 3 <= col <= 5:
+        #         row_ind = 6
+        #         col_ind = 3
+        #     # Bottom right.
+        #     else:
+        #         row_ind = 6
+        #         col_ind = 6
+        # if not self.valid_in_box(row_ind, col_ind, num):
+        #     return False
+        # # Returns True if all tests pass.
+        # else:
+        #     return True
 
     def fill_box(self, row_start, col_start):
         self.row_start = row_start
         self.col_start = col_start
-        # Assigns variable with list of single-digit integers.
-        unused_in_box = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        # Assigns counter variable to restrict method to first three rows.
-        row_counter = 3
-        # Loop assess and modifies three by three square.
-        while row_counter > 0:
-            # Assigns counter variable to restrict method to first three columns.
-            col_counter = 3
-            while col_counter > 0:
-                # strategy for randomly ordering list taken from https://note.nkmk.me/en/python-random-shuffle/.
-                random.shuffle(unused_in_box)
-                # Variable is assigned the new first element in the int list. Element is then removed.
-                random_num = unused_in_box.pop()
-                # Element is replaced with the random element.
+
+        unused = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        row_count = 3
+
+        while row_count > 0:
+            col_count = 3
+            while col_count > 0:
+                random.shuffle(unused)
+                random_num = unused.pop()
+
                 self.board[int(self.row_start)][int(self.col_start)] = random_num
                 self.col_start += 1
-                col_counter -= 1
+                col_count -= 1
             self.row_start += 1
             self.col_start = col_start
-            row_counter -= 1
+            row_count -= 1
 
     def fill_diagonal(self):
         # Calls fill_box method and passes in the starting index for each diagonal box.
@@ -173,14 +167,12 @@ class SudokuGenerator:
         self.fill_remaining(0, self.box_length)
 
     def remove_cells(self):
-        # Assigns temp_counter with number of cells to be removed.
         temp = self.removed_cells
-        while temp >= 1:
-            # Randomly selects an element of the 2D list.
+        while temp >= 1: # select a random cell
             row = random.randint(0, 8)
             col = random.randint(0, 8)
-            # Checks to make sure the selected element is not already zero.
-            if self.board[row][col] != 0:
+
+            if self.board[row][col] != 0: # check if cell is zero
                 self.board[row][col] = 0
                 temp -= 1
             else:
