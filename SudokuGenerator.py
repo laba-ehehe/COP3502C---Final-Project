@@ -39,7 +39,6 @@ class SudokuGenerator:
         return False
 
     def fill_box(self, row_start, col_start): #randomly fills in values in the 3x3 box from (row_start, col_start) to (row_start+2, col_start+2). Uses unused_in_box to ensure no value occurs in the box more than once.
-        num = 0
         for row in range(self.box_length):
             for col in range(self.box_length):
                 while True:
