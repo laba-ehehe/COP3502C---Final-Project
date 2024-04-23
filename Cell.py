@@ -50,12 +50,16 @@ class Cell:  # This class represents a single cell in the Sudoku board. There ar
         # if there is a nonzero value, and it is a sketch, then the color will be grey
         if self.value != 0 and self.sketch:
             surface = font.render(str(self.value), 0, GRAY)
-            rectangle = surface.get_rect(center=((self.row * (600 / 9) + 25), (self.col * (600 / 9) + 25)))
+            rectangle = surface.get_rect(center=((self.row * (600 / 9) + (600 / 18)), (self.col * (600 / 9) + (600 / 18))))
             self.screen.blit(surface, rectangle)
+        # if self.value != 0 and self.sketch:
+        #     surface = font.render(str(self.value), 0, GRAY)
+        #     rectangle = surface.get_rect(center=((self.row * (600 / 9) + 25), (self.col * (600 / 9) + 25)))
+        #     self.screen.blit(surface, rectangle)
 
         # if 0 is enter, nothing will display
         if self.value == 0:
-            surface = font.render(" ", 0, WHITE)
+            surface = font.render(' ', True, WHITE)
             rectangle = surface.get_rect(center=((self.row * (600 / 9) + (600 / 18)), (self.col * (600 / 9) + (600 / 18))))
             self.screen.blit(surface, rectangle)
 
@@ -63,7 +67,8 @@ class Cell:  # This class represents a single cell in the Sudoku board. There ar
         self.value = value
 
     def set_sketched_value(self, value):  # Set the sketched value
-        self.sketched_value = value
+        self.value = value
+        self.sketch = True
 
     def update(self):  # Update cell appearance if needed
         pass

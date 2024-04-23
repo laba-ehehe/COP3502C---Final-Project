@@ -40,15 +40,6 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
             self.original.append(current_row)
 
     def draw(self):  # Draws an outline of the Sudoku grid, with bold lines to delineate the 3x3 boxes. Draws every cell on this board.
-        # cell_size = width // 9
-
-        # for i in range(10):
-            # line_width = BOLD if i % 3 == 0 else LIGHT
-            # # pygame.draw.line(self.screen, BLACK, (0, i * (self.height / 9)), (self.width, i * (self.height / 9)), line_width)
-            # # pygame.draw.line(self.screen, BLACK, (i * (self.width / 9), 0), (i * (self.width / 9), self.height), line_width)
-            # pygame.draw.line(self.screen, BLACK, (0, i * cell_size), (width, i * cell_size), line_width)
-            # pygame.draw.line(self.screen, BLACK, (i * cell_size, 0), (i * cell_size, height), line_width)
-
         for i in range(0, 10):  # draw vertical lines, every 3rd bold
             if i % 3 == 0:
                 pygame.draw.line(self.screen, BLACK, (i * (width / 9), 0), (i * (width / 9), width), BOLD)
@@ -73,6 +64,8 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
         pygame.draw.line(self.screen, PINK, ((row + 1) * (width / 9), col * (width / 9)), ((row + 1) * (width / 9), (col + 1) * (width / 9)), LIGHT)
         pygame.draw.line(self.screen, PINK, (row * (width / 9), col * (width / 9)), ((row + 1) * (width / 9), col * (width / 9)), LIGHT)
 
+        self.selected = self.cell[row][col]
+
         # # pygame.draw.rect(self.screen, PINK, (col * (self.width / 9), row * (self.height / 9), self.width / 9, self.height / 9), LIGHT)
         #
         # # Remove the previous selection rectangle
@@ -92,7 +85,7 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
             return None
 
     def clear(self):  # Clears the value cell. Note that the user can only remove the cell values and sketched value that are filled by themselves.
-        if self.selected.is_given == False:
+        if self.selected.is_given == True:
             self.selected.value = 0
 
     def sketch(self, value):  # Sets the sketched value of the current selected cell equal to user entered value. It will be displayed at the top left corner of the cell using the draw() function.
@@ -136,7 +129,7 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
                     empty_found = True
 
         if empty_found == True:
-            return (x, y)
+            return x, y
         else:
             return None
 
