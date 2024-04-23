@@ -156,10 +156,10 @@ while True:
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = event.pos
-            if 375 <= x <= 425 and 614.5 <= y <= 645.5:
+            if 210 <= x <= 260 and height - 60 <= y <= height - 29:  # Exit button
                 pygame.quit()
                 sys.exit()
-            elif 257.5 <= x <= 347.5 and 614.5 <= y <= 645.5:
+            elif 100 <= x <= 185 and height - 60 <= y <= height - 29:  # Restart button
                 difficulty = game_start()
                 screen = pygame.display.set_mode((width, height))
                 pygame.display.set_caption('( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)')
@@ -168,7 +168,7 @@ while True:
                 current_board.draw()
                 buttons(screen)
                 pygame.display.update()
-            elif 167.5 <= x <= 232.5 and 614.5 <= y <= 645.5:
+            elif 10 <= x <= 75 and height - 60 <= y <= height - 29:  # Reset button
                 current_board.reset_to_original()
                 screen.fill(WHITE)
                 current_board.draw()

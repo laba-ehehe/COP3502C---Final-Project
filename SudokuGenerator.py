@@ -73,7 +73,7 @@ class SudokuGenerator:
     
     def fill_values(self): # It constructs a solution by calling fill_diagonal and fill_remaining.
         self.fill_diagonal()
-        self.fill_remaining(0, self.box_length)
+        self.fill_remaining(0, 3)
 
     def remove_cells(self): # This method removes the appropriate number of cells from the board
         pass
