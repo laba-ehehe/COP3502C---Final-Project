@@ -5,6 +5,7 @@ from Board import Board
 from Cell import Cell
 from const import *
 
+
 def game_start():
     # screen, caption, background
     screen = pygame.display.set_mode((width, height))

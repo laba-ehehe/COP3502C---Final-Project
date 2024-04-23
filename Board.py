@@ -1,7 +1,5 @@
 import pygame
-import sys
 from SudokuGenerator import generate_sudoku
-from Board import Board
 from Cell import Cell
 from const import *
 
