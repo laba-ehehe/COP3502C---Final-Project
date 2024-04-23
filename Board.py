@@ -56,7 +56,7 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
                 pygame.draw.line(self.screen, BLACK, (i * (width / 9), 0), (i * (width / 9), width), LIGHT)
 
             # draws the horizontal lines every 3rd bolded
-        for j in range(0, 10):  # draw horizontal lines, every 3rd bold
+        for j in range(0, 10):
             if j % 3 == 0:
                 pygame.draw.line(self.screen, BLACK, (0, j * (width / 9)), (width, j * (width / 9)), BOLD)
             else:
@@ -68,9 +68,20 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
 
     def select(self, row, col):  # Marks the cell at (row, col) in the board as the current selected cell. Once a cell has been selected, the user can edit its value or sketched value.
         # draw border around selected cell
-        pygame.draw.rect(self.screen, PINK, (col * (self.width / 9), row * (self.height / 9), self.width / 9, self.height / 9), LIGHT)
+        pygame.draw.line(self.screen, PINK, (row * (width / 9), col * (width / 9)), (row * (width / 9), (col + 1) * (width / 9)), LIGHT)
+        pygame.draw.line(self.screen, PINK, (row * (width / 9), (col + 1) * (width / 9)), ((row + 1) * (width / 9), (col + 1) * (width / 9)), LIGHT)
+        pygame.draw.line(self.screen, PINK, ((row + 1) * (width / 9), col * (width / 9)), ((row + 1) * (width / 9), (col + 1) * (width / 9)), LIGHT)
+        pygame.draw.line(self.screen, PINK, (row * (width / 9), col * (width / 9)), ((row + 1) * (width / 9), col * (width / 9)), LIGHT)
 
-        self.selected = self.cell[row][col] # assign selected_cell
+        # # pygame.draw.rect(self.screen, PINK, (col * (self.width / 9), row * (self.height / 9), self.width / 9, self.height / 9), LIGHT)
+        #
+        # # Remove the previous selection rectangle
+        # pygame.draw.rect(self.screen, WHITE, (col * (self.width / 9), row * (self.height / 9), self.width / 9, self.height / 9))
+        #
+        # # Draw a new selection rectangle around the selected cell
+        # pygame.draw.rect(self.screen, PINK, (col * (self.width / 9), row * (self.height / 9), self.width / 9, self.height / 9), LIGHT)
+        #
+        # self.selected = self.cell[row][col] # assign selected_cell
 
     def click(self, x, y):  # If a tuple of (x, y) coordinates is within the displayed board, this function returns a tuple of the (row, col) of the cell which was clicked. Otherwise, this function returns None.
         if 0 <= x <= width and 0 <= y <= width:

@@ -8,8 +8,8 @@ PINK = (254, 127, 156)
 width, height = 600, 700
 
 # Line thickness
-LIGHT = 8
-BOLD = 12
+LIGHT = 6
+BOLD = 10
 
 # Text
 CAPTION = '( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)'
