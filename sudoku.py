@@ -3,6 +3,8 @@ import sys
 from Board import Board
 from const import *
 
+pygame.init()
+
 
 def game_start():
     # screen, caption, background
@@ -103,7 +105,8 @@ def game_over():
                     screen = pygame.display.set_mode((width, height))
                     pygame.display.set_caption('( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)')
                     screen.fill(WHITE)
-                    # Calls Board class to create a new current_board.
+
+                    # create a new current_board.
                     current_board = Board(width, height, screen, difficulty)
                     current_board.draw()
                     buttons(screen)

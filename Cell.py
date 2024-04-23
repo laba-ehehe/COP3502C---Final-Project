@@ -26,9 +26,8 @@ class Cell: # This class represents a single cell in the Sudoku board. There are
     def set_value(self, value):
         self.value = value
 
-    def set_sketched_value(self, value):
-        # Set the sketched value
+    def set_sketched_value(self, value): # Set the sketched value
         self.sketched_value = value
 
-    def update(self):
-        pass  # Update cell appearance if needed
+    def update(self): # Update cell appearance if needed
+        pass
