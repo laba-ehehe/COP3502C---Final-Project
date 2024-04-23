@@ -15,6 +15,10 @@ def game_start():
     title_rectangle = title_surface.get_rect(center=(width // 2, 100))
     screen.blit(title_surface, title_rectangle)
 
+    # lenny_surface = start_title_font.render('(͡° ͜ʖ ͡°)', True, BLACK)
+    # lenny_rectangle = title_surface.get_rect(center=(width // 2, 100))
+    # screen.blit(lenny_surface, lenny_rectangle)
+
     game_surface = game_font.render('Select Game Mode:', True, BLACK)
     game_rectangle = game_surface.get_rect(center=(width // 2, height // 2 + 50))
     screen.blit(game_surface, game_rectangle)
@@ -138,8 +142,7 @@ def buttons(screen):
     reset_surface = pygame.Surface((65, 31))
     reset_surface.fill(BLACK)
     reset_surface.blit(reset_text, (5, 5))
-    reset_rectangle = reset_surface.get_rect(center=(200, 650))
-    # reset_rectangle = reset_surface.get_rect(topleft=(10, height - 60))
+    reset_rectangle = reset_surface.get_rect(center=(175, 650))
     screen.blit(reset_surface, reset_rectangle)
 
     # restart button
@@ -148,7 +151,6 @@ def buttons(screen):
     restart_surface.fill(BLACK)
     restart_surface.blit(restart_text, (5, 5))
     restart_rectangle = restart_surface.get_rect(center=(300, 650))
-    # restart_rectangle = restart_surface.get_rect(topleft=(100, height - 60))
     screen.blit(restart_surface, restart_rectangle)
 
     # exit button
@@ -156,8 +158,7 @@ def buttons(screen):
     exit_surface = pygame.Surface((50, 31))
     exit_surface.fill(BLACK)
     exit_surface.blit(exit_text, (5, 5))
-    exit_rectangle = exit_surface.get_rect(center=(400, 650))
-    # exit_rectangle = exit_surface.get_rect(topleft=(210, height - 60))
+    exit_rectangle = exit_surface.get_rect(center=(425, 650))
     screen.blit(exit_surface, exit_rectangle)
 
     pygame.display.update()
