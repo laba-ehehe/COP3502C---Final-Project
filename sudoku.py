@@ -3,12 +3,7 @@ import sys
 from SudokuGenerator import generate_sudoku
 from Board import Board
 from Cell import Cell
-
-# Define colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-GRAY = (200, 200, 200)
-width, height = 600, 700
+from const import *
 
 def game_start():
     # screen, caption, background

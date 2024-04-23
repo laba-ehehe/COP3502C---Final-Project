@@ -3,16 +3,11 @@ import sys
 from SudokuGenerator import generate_sudoku
 from Board import Board
 from Cell import Cell
+from const import *
 
-SIDE = 600
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-PINK = (213, 100, 124)
-BOLD = 13
-LIGHT = 10
 
 pygame.init()
+
 
 class Board: # This class represents an entire Sudoku board. A Board object has 81 Cell objects
     def __init__(self, width, height, screen, difficulty): # Constructor for the Board class, screen is a window from PyGame, difficulty is a variable to indicate if the user chose easy, medium, or hard.
