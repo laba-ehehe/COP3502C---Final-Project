@@ -10,3 +10,6 @@ width, height = 600, 700
 # Line thickness
 LIGHT = 8
 BOLD = 12
+
+# Text
+CAPTION = '( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)'
