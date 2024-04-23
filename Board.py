@@ -38,11 +38,14 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
             self.original.append(current_row)
 
     def draw(self):  # Draws an outline of the Sudoku grid, with bold lines to delineate the 3x3 boxes. Draws every cell on this board.
+        cell_size = width // 9
 
         for i in range(10):
             line_width = BOLD if i % 3 == 0 else LIGHT
-            pygame.draw.line(self.screen, BLACK, (0, i * (self.height / 9)), (self.width, i * (self.height / 9)), line_width)
-            pygame.draw.line(self.screen, BLACK, (i * (self.width / 9), 0), (i * (self.width / 9), self.height), line_width)
+            # pygame.draw.line(self.screen, BLACK, (0, i * (self.height / 9)), (self.width, i * (self.height / 9)), line_width)
+            # pygame.draw.line(self.screen, BLACK, (i * (self.width / 9), 0), (i * (self.width / 9), self.height), line_width)
+            pygame.draw.line(self.screen, BLACK, (0, i * cell_size), (width, i * cell_size), line_width)
+            pygame.draw.line(self.screen, BLACK, (i * cell_size, 0), (i * cell_size, height), line_width)
 
         for row in self.cell: # draw cells
             for cell in row:
