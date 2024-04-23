@@ -59,10 +59,10 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
 
     def select(self, row, col):  # Marks the cell at (row, col) in the board as the current selected cell. Once a cell has been selected, the user can edit its value or sketched value.
         # draw border around selected cell
-        pygame.draw.line(self.screen, PINK, (row * (width / 9), col * (width / 9)), (row * (width / 9), (col + 1) * (width / 9)), LIGHT)
-        pygame.draw.line(self.screen, PINK, (row * (width / 9), (col + 1) * (width / 9)), ((row + 1) * (width / 9), (col + 1) * (width / 9)), LIGHT)
-        pygame.draw.line(self.screen, PINK, ((row + 1) * (width / 9), col * (width / 9)), ((row + 1) * (width / 9), (col + 1) * (width / 9)), LIGHT)
-        pygame.draw.line(self.screen, PINK, (row * (width / 9), col * (width / 9)), ((row + 1) * (width / 9), col * (width / 9)), LIGHT)
+        pygame.draw.line(self.screen, PINK, (row * (width / 9), col * (width / 9)), (row * (width / 9), (col + 1) * (width / 9)), BOLD)
+        pygame.draw.line(self.screen, PINK, (row * (width / 9), (col + 1) * (width / 9)), ((row + 1) * (width / 9), (col + 1) * (width / 9)), BOLD)
+        pygame.draw.line(self.screen, PINK, ((row + 1) * (width / 9), col * (width / 9)), ((row + 1) * (width / 9), (col + 1) * (width / 9)), BOLD)
+        pygame.draw.line(self.screen, PINK, (row * (width / 9), col * (width / 9)), ((row + 1) * (width / 9), col * (width / 9)), BOLD)
 
         self.selected = self.cell[row][col]
 

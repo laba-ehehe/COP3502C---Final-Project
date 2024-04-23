@@ -76,8 +76,8 @@ def game_over():
     # Update display
     pygame.display.update()
 
-    NAY = True
-    while NAY:
+    YAY = True
+    while YAY:
         # for event in pygame.event.get():
         #     if event.type == pygame.QUIT:
         #         sys.exit()
@@ -100,7 +100,7 @@ def game_over():
                     current_board.draw()
                     buttons(screen)
                     pygame.display.update()
-                    NAY = False
+                    YAY = False
 
 
 def game_win():
