@@ -76,6 +76,7 @@ class SudokuGenerator:
         self.fill_remaining(0, self.box_length)
 
     def remove_cells(self): # This method removes the appropriate number of cells from the board
+        pass
 
 
 def generate_sudoku(size, removed): # Given size and removed, this function generates and returns a size-by-size sudoku board.

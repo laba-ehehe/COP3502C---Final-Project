@@ -9,7 +9,7 @@ def game_start():
     # screen, caption, background
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption('( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)')
-    screen.fill((255, 255, 255))
+    screen.fill(WHITE)
 
     # title, game modes
     title_surface = start_title_font.render('Sudoku', 0, BLACK)
@@ -92,11 +92,11 @@ def game_over():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if restart_rectangle.collidepoint(event.pos): # resets screen display.
                     difficulty = game_start()
-                    screen = pygame.display.set_mode((600, 700))
+                    screen = pygame.display.set_mode((width, height))
                     pygame.display.set_caption('( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)')
                     screen.fill(WHITE)
                     # Calls Board class to create a new current_board.
-                    current_board = Board(600, 700, screen, difficulty)
+                    current_board = Board(width, height, screen, difficulty)
                     current_board.draw()
                     buttons(screen)
                     pygame.display.update()
@@ -105,12 +105,12 @@ def game_over():
 
 def game_win():
     # screen, caption, background
-    screen = pygame.display.set_mode((600, 700))
+    screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption('( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)')
     screen.fill(WHITE)
 
     # title, game won & exit message
-    title_surface = start_title_font.render('Game Won!', 0, BLACK)
+    title_surface = start_title_font.render('You Win!', 0, BLACK)
     title_rectangle = title_surface.get_rect(center=(width // 2, height // 2 - 150))
     screen.blit(title_surface, title_rectangle)
 
@@ -178,7 +178,7 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)')
 screen.fill(WHITE)
 # Calls Board class to create current_board.
-current_board = Board(600, 600, screen, difficulty)
+current_board = Board(width, width, screen, difficulty)
 # Draws current_board.
 current_board.draw()
 buttons(screen)
@@ -204,7 +204,7 @@ while True:
                 difficulty = game_start()
                 screen = pygame.display.set_mode((width, height))
                 pygame.display.set_caption('( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)')
-                screen.fill([255, 255, 245])
+                screen.fill(WHITE)
                 # Calls Board class to create a new current_board.
                 current_board = Board(600, 600, screen, difficulty)
                 current_board.draw()
@@ -213,7 +213,7 @@ while True:
             # Calls method to replace current list of cells with original version.
             elif 167.5 <= x <= 232.5 and 614.5 <= y <= 645.5:
                 current_board.reset_to_original()
-                screen.fill([255, 255, 245])
+                screen.fill(WHITE)
                 current_board.draw()
                 buttons(screen)
                 pygame.display.update()
@@ -265,7 +265,7 @@ while True:
                 pygame.display.set_caption('( ͡° ͜ʖ ͡°) SUDOKU ( ͡° ͜ʖ ͡°)')
                 screen.fill(WHITE)
                 # Calls Board class to create a new current_board.
-                current_board = Board(600, 600, screen, difficulty)
+                current_board = Board(width, width, screen, difficulty)
                 current_board.draw()
                 buttons(screen)
                 pygame.display.update()

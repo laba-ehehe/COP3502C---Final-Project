@@ -5,7 +5,6 @@ from Board import Board
 from Cell import Cell
 from const import *
 
-
 pygame.init()
 
 
@@ -15,6 +14,7 @@ class Board: # This class represents an entire Sudoku board. A Board object has 
         self.height = height
         self.screen = screen
 
+        # Difficulty levels
         if difficulty == 'EASY':
             self.difficulty = 30
         elif difficulty == 'MEDIUM':
@@ -39,21 +39,19 @@ class Board: # This class represents an entire Sudoku board. A Board object has 
                 current_row.append(Cell(col_value, row_index, col_index, self.screen))
             self.original.append(current_row)
 
-        # self.test_board = copy.deepcopy(self.board)
-
     def draw(self): # Draws an outline of the Sudoku grid, with bold lines to delineate the 3x3 boxes. Draws every cell on this board.
 
         for i in range(0, 10): # draw horizontal lines
             if i & 3 == 0:
-                pygame.draw.line(self.screen, BLACK, (0, i * (SIDE / 9)), (SIDE, i * (SIDE / 9)), BOLD)
+                pygame.draw.line(self.screen, BLACK, (0, i * (width / 9)), (width, i * (width / 9)), BOLD)
             else:
-                pygame.draw.line(self.screen, BLACK, (0, i * (SIDE / 9)), (SIDE, i * (SIDE / 9)), LIGHT)
+                pygame.draw.line(self.screen, BLACK, (0, i * (width / 9)), (width, i * (width / 9)), LIGHT)
 
         for i in range(0, 10): # draw vertical lines
             if i & 3 == 0:
-                pygame.draw.line(self.screen, BLACK, (i * (SIDE / 9), 0), (i * (SIDE / 9), SIDE), BOLD)
+                pygame.draw.line(self.screen, BLACK, (i * (width / 9), 0), (i * (width / 9), width), BOLD)
             else:
-                pygame.draw.line(self.screen, BLACK, (i * (SIDE / 9), 0), (i * (SIDE / 9), SIDE), LIGHT)
+                pygame.draw.line(self.screen, BLACK, (i * (width / 9), 0), (i * (width / 9), width), LIGHT)
 
         for row in self.hehe: # draw cells
             for cell in row:
@@ -61,17 +59,17 @@ class Board: # This class represents an entire Sudoku board. A Board object has 
 
     def select(self, row, col): # Marks the cell at (row, col) in the board as the current selected cell. Once a cell has been selected, the user can edit its value or sketched value.
         # draw border around selected cell
-        pygame.draw.line(self.screen, PINK, (row * (SIDE / 9), col * (SIDE / 9)), (row * (SIDE / 9), (col + 1) * (SIDE / 9)), LIGHT)
-        pygame.draw.line(self.screen, PINK, (row * (SIDE / 9), (col + 1) * (SIDE / 9)), ((row + 1) * (SIDE / 9), (col + 1) * (SIDE / 9)), LIGHT)
-        pygame.draw.line(self.screen, PINK, ((row + 1) * (SIDE / 9), col * (SIDE / 9)), ((row + 1) * (SIDE / 9), (col + 1) * (SIDE / 9)), LIGHT)
-        pygame.draw.line(self.screen, PINK, (row * (SIDE / 9), col * (SIDE / 9)), ((row + 1) * (SIDE / 9), col * (SIDE / 9)), LIGHT)
+        pygame.draw.line(self.screen, PINK, (row * (width / 9), col * (width / 9)), (row * (width / 9), (col + 1) * (width / 9)), LIGHT)
+        pygame.draw.line(self.screen, PINK, (row * (width / 9), (col + 1) * (width / 9)), ((row + 1) * (width / 9), (col + 1) * (width / 9)), LIGHT)
+        pygame.draw.line(self.screen, PINK, ((row + 1) * (width / 9), col * (width / 9)), ((row + 1) * (width / 9), (col + 1) * (width / 9)), LIGHT)
+        pygame.draw.line(self.screen, PINK, (row * (width / 9), col * (width / 9)), ((row + 1) * (width / 9), col * (width / 9)), LIGHT)
 
         self.selected = self.hehe[row][col] # assign selected_cell
 
     def click(self, x, y): # If a tuple of (x, y) coordinates is within the displayed board, this function returns a tuple of the (row, col) of the cell which was clicked. Otherwise, this function returns None.
-        if 0 <= x <= SIDE and 0 <= y <= SIDE:
-            row = int(x // (SIDE / 9))
-            col = int(y // (SIDE / 9))
+        if 0 <= x <= width and 0 <= y <= width:
+            row = int(x // (width / 9))
+            col = int(y // (width / 9))
             return (row, col)
         else:
             return None
@@ -87,22 +85,23 @@ class Board: # This class represents an entire Sudoku board. A Board object has 
     def place_number(self, value): # Sets the value of the current selected cell equal to user entered value. Called when the user presses the Enter key.
         if self.selected.can_be_cleared:
             self.selected.set_cell_value(value)
+
     def reset_to_original(self): # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit).
         self.hehe = self.original
 
-    def is_full(self): # Returns a Boolean value indicating whether the board is full or not.
+    def is_full(self): # Return True if the board is full, False if not
         for row in range(0, 9):
             for col in range(0, 9):
                 if self.hehe[row][col].value == 0:
                     return False
         return True
 
-    def update_board(self): # Updates the underlying 2D board with the values in all cells.
+    def update_board(self): # Updates the values in all cells
         for row in range(0, 9):
             for col in range(0, 9):
                 self.board[row][col] = self.hehe[row][col].value
 
-    def find_empty(self): # Finds an empty cell and returns its row and col as a tuple (x, y).
+    def find_empty(self): # find an empty cell and returns its row and col as a tuple (x, y)
         woa = False
         x, y = 0, 0
 
@@ -118,8 +117,8 @@ class Board: # This class represents an entire Sudoku board. A Board object has 
         else:
             return None
 
-    def check_board(self): # Check whether the Sudoku board is solved correctly.
-        for row in self.board:
+    def check_board(self): # Check whether the board is solved correctly
+        for row in self.board: # check if each row have all number 1-9
             for num in range(1, 10):
                 if num not in row:
                     return False
