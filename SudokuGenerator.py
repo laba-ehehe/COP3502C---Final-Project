@@ -3,12 +3,12 @@ import random
 
 class SudokuGenerator:
     def __init__(self, row_length=9, removed_cells=20):
-        self.size = row_length
+        self.row_length = row_length
         self.removed_cells = removed_cells
         self.board = [[0 for _ in range(row_length)] for _ in range(row_length)]
 
     def get_board(self): # Returns a 2D python list of numbers, which represents the board
-        return self.board
+        return self.board # return current board
     
     def print_board(self): # Displays the board to the console.
         for row in self.board:
@@ -41,7 +41,7 @@ class SudokuGenerator:
                         self.board[row_start + i][col_start + j] = num
                         break
     def fill_diagonal(self): # Fills the three boxes along the main diagonal of the board. This is the first major step in generating a Sudoku.
-        for i in range(0, self.size, 3):
+        for i in range(0, self.row_length, 3):
             self.fill_box(i, i)
 
     def fill_remaining(self, row, col): # This will return a completely filled board (the Sudoku solution).
