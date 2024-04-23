@@ -47,9 +47,9 @@ class SudokuGenerator:
                     if self.valid_in_box(row_start, col_start, num):
                         self.board[row_start + row][col_start + col] = num
                         break
-    def fill_diagonal(self): # Fills the three boxes along the main diagonal of the board. This is the first major step in generating a Sudoku.
-        for i in range(0, self.size, 3):
-            self.fill_box(i, i)
+    def fill_diagonal(self): #fills the three boxes along the main diagonal of the board. This is the first major step in generating a Sudoku.
+        for num in range(0, self.row_length, 3):
+            self.fill_box(num, num)
 
     def fill_remaining(self, row, col): # This will return a completely filled board (the Sudoku solution).
         if (col >= self.row_length and row < self.row_length - 1):
