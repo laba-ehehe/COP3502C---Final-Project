@@ -6,7 +6,7 @@ from const import *
 pygame.init()
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption(CAPTION)
-start_title_font = pygame.font.Font(None, 130)
+start_title_font = pygame.font.Font(None, 120)
 game_font = pygame.font.Font(None, 80)
 button_font = pygame.font.Font(None, 70)
 
@@ -18,6 +18,7 @@ def game_start():  # UI display when game start
     screen.fill(BACKGROUND)
 
     # SUDOKU title
+    start_title_font = pygame.font.Font(None, 150)
     title_surface = start_title_font.render('SUDOKU', True, TITLE_TEXT)
     title_rectangle = title_surface.get_rect(center=(width // 2, 150))
     screen.blit(title_surface, title_rectangle)
@@ -74,7 +75,7 @@ def game_over():  # UI display when game over
     screen.fill(BACKGROUND)
 
     # Game Over message
-    title_surface = start_title_font.render('Game Over D:', True, TITLE_TEXT)
+    title_surface = start_title_font.render('You Lose :D', True, TITLE_TEXT)
     title_rectangle = title_surface.get_rect(center=(width // 2, height // 2 - 150))
     screen.blit(title_surface, title_rectangle)
 
