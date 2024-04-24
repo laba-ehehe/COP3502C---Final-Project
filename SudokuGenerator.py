@@ -61,53 +61,6 @@ class SudokuGenerator:
             return False
         return True # all tests passed
 
-        # Assigns row_ind and col_ind based on which box the cell is located in.
-        # Credit to A.Sarmiento for explaining that I needed to convert row and col to starting box indices.
-        # if 0 <= row <= 2:
-        #     if 0 <= col <= 2:
-        #         # Top left.
-        #         row_ind = 0
-        #         col_ind = 0
-        #     elif 3 <= col <= 5:
-        #         # Top middle.
-        #         row_ind = 0
-        #         col_ind = 3
-        #     else:
-        #         # Top right.
-        #         row_ind = 0
-        #         col_ind = 6
-        # elif 3 <= row <= 5:
-        #     if 0 <= col <= 2:
-        #         # Middle left.
-        #         row_ind = 3
-        #         col_ind = 0
-        #     elif 3 <= col <= 5:
-        #         # Middle middle.
-        #         row_ind = 3
-        #         col_ind = 3
-        #     else:
-        #         # middle right.
-        #         row_ind = 3
-        #         col_ind = 6
-        # else:
-        #     # Bottom left.
-        #     if 0 <= col <= 2:
-        #         row_ind = 6
-        #         col_ind = 0
-        #     # Bottom middle.
-        #     elif 3 <= col <= 5:
-        #         row_ind = 6
-        #         col_ind = 3
-        #     # Bottom right.
-        #     else:
-        #         row_ind = 6
-        #         col_ind = 6
-        # if not self.valid_in_box(row_ind, col_ind, num):
-        #     return False
-        # # Returns True if all tests pass.
-        # else:
-        #     return True
-
     def fill_box(self, row_start, col_start):
         self.row_start = row_start
         self.col_start = col_start
