@@ -6,7 +6,6 @@ https://www.geeksforgeeks.org/program-sudoku-generator/
 
 """
 
-
 class SudokuGenerator:
     '''
 	create a sudoku board - initialize class variables and set up the 2D board
