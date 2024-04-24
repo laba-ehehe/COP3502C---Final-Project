@@ -1,5 +1,4 @@
 import pygame
-import copy
 from SudokuGenerator import generate_sudoku
 from Cell import Cell
 from const import *
@@ -25,7 +24,6 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
         self.cell = []
         self.original = []
         self.selected = None
-        # self.test_board = copy.deepcopy(self.board)
 
         for row_index, row_value in enumerate(self.board):
             current_row = []
