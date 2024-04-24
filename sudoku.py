@@ -6,7 +6,7 @@ from const import *
 pygame.init()
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption(CAPTION)
-start_title_font = pygame.font.Font(None, 100)
+start_title_font = pygame.font.Font(None, 130)
 game_font = pygame.font.Font(None, 80)
 button_font = pygame.font.Font(None, 70)
 
@@ -115,7 +115,7 @@ def game_win():  # UI display when game win
     pygame.display.set_caption(CAPTION)
     screen.fill(BACKGROUND)
 
-    # You Win! message
+    # You Win :D message
     title_surface = start_title_font.render('You Win :D', True, TITLE_TEXT)
     title_rectangle = title_surface.get_rect(center=(width // 2, height // 2 - 150))
     screen.blit(title_surface, title_rectangle)
@@ -128,6 +128,7 @@ def game_win():  # UI display when game win
     exit_rectangle = exit_surface.get_rect(center=(width // 2, height // 2 + 100))
     screen.blit(exit_surface, exit_rectangle)
 
+    # Update display
     pygame.display.update()
 
     while True:
@@ -140,32 +141,33 @@ def game_win():  # UI display when game win
 
 
 def buttons(screen):  # UI display for in game buttons
-    button_font = pygame.font.Font(None, 25)
+    button_font = pygame.font.Font(None, 40)
 
     # reset button
     reset_text = button_font.render('RESET', True, BUTTON_TEXT)
-    reset_surface = pygame.Surface((65, 31))
+    reset_surface = pygame.Surface((reset_text.get_size()[0] + 20, reset_text.get_size()[1] + 20))
     reset_surface.fill(BUTTON_SURFACE)
-    reset_surface.blit(reset_text, (5, 5))
-    reset_rectangle = reset_surface.get_rect(center=(175, 650))
+    reset_surface.blit(reset_text, (10, 10))
+    reset_rectangle = reset_surface.get_rect(center=(width // 2 - 175, 650))
     screen.blit(reset_surface, reset_rectangle)
 
     # restart button
     restart_text = button_font.render('RESTART', 0, BUTTON_TEXT)
-    restart_surface = pygame.Surface((85, 31))
+    restart_surface = pygame.Surface((restart_text.get_size()[0] + 20, restart_text.get_size()[1] + 20))
     restart_surface.fill(BUTTON_SURFACE)
-    restart_surface.blit(restart_text, (5, 5))
-    restart_rectangle = restart_surface.get_rect(center=(300, 650))
+    restart_surface.blit(restart_text, (10, 10))
+    restart_rectangle = restart_surface.get_rect(center=(width // 2, 650))
     screen.blit(restart_surface, restart_rectangle)
 
     # exit button
     exit_text = button_font.render('EXIT', 0, BUTTON_TEXT)
-    exit_surface = pygame.Surface((50, 31))
+    exit_surface = pygame.Surface((exit_text.get_size()[0] + 20, exit_text.get_size()[1] + 20))
     exit_surface.fill(BUTTON_SURFACE)
-    exit_surface.blit(exit_text, (5, 5))
-    exit_rectangle = exit_surface.get_rect(center=(425, 650))
+    exit_surface.blit(exit_text, (10, 10))
+    exit_rectangle = exit_surface.get_rect(center=(width // 2 + 175, 650))
     screen.blit(exit_surface, exit_rectangle)
 
+    # Update display
     pygame.display.update()
     return reset_rectangle, restart_rectangle, exit_rectangle
 
