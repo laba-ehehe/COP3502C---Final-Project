@@ -5,33 +5,39 @@ from const import *
 
 
 def game_start():  # UI display when game start
+    # screen, caption, background
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption(CAPTION)
     screen.fill(BACKGROUND)
 
+    # SUDOKU title
     title_surface = start_title_font.render('SUDOKU', True, TITLE_TEXT)
-    title_rectangle = title_surface.get_rect(center=(width // 2, 100))
+    title_rectangle = title_surface.get_rect(center=(width // 2, 150))
     screen.blit(title_surface, title_rectangle)
 
-    game_surface = game_font.render('Select Game Mode:', True, TITLE_TEXT)
+    # Select Game Mode message
+    game_surface = game_font.render('Select Game Mode', True, TITLE_TEXT)
     game_rectangle = game_surface.get_rect(center=(width // 2, height // 2 + 50))
     screen.blit(game_surface, game_rectangle)
 
-    easy_text = button_font.render('Easy', 0, BUTTON_TEXT)
+    # Easy button
+    easy_text = button_font.render('Easy', True, BUTTON_TEXT)
     easy_surface = pygame.Surface((easy_text.get_size()[0] + 20, easy_text.get_size()[1] + 20))
     easy_surface.fill(BUTTON_SURFACE)
     easy_surface.blit(easy_text, (10, 10))
     easy_rectangle = easy_surface.get_rect(center=(width // 2 - 200, height // 2 + 200))
     screen.blit(easy_surface, easy_rectangle)
 
-    medium_text = button_font.render('Medium', 0, BUTTON_TEXT)
+    # Medium button
+    medium_text = button_font.render('Medium', True, BUTTON_TEXT)
     medium_surface = pygame.Surface((medium_text.get_size()[0] + 20, medium_text.get_size()[1] + 20))
     medium_surface.fill(BUTTON_SURFACE)
     medium_surface.blit(medium_text, (10, 10))
     medium_rectangle = medium_surface.get_rect(center=(width // 2, height // 2 + 200))
     screen.blit(medium_surface, medium_rectangle)
 
-    hard_text = button_font.render('Hard', 0, BUTTON_TEXT)
+    # Hard button
+    hard_text = button_font.render('Hard', True, BUTTON_TEXT)
     hard_surface = pygame.Surface((hard_text.get_size()[0] + 20, hard_text.get_size()[1] + 20))
     hard_surface.fill(BUTTON_SURFACE)
     hard_surface.blit(hard_text, (10, 10))
@@ -50,21 +56,23 @@ def game_start():  # UI display when game start
                 elif hard_rectangle.collidepoint(event.pos):
                     return 'HARD'
 
+        # Update display
         pygame.display.update()
 
 
 def game_over():  # UI display when game over
+    # screen, caption, background
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption(CAPTION)
     screen.fill(BACKGROUND)
 
     # Game Over message
-    title_surface = start_title_font.render('Game Over D:', 0, TITLE_TEXT)
+    title_surface = start_title_font.render('Game Over D:', True, TITLE_TEXT)
     title_rectangle = title_surface.get_rect(center=(width // 2, height // 2 - 150))
     screen.blit(title_surface, title_rectangle)
 
     # Restart button
-    restart_text = button_font.render('RESTART', 0, BUTTON_TEXT)
+    restart_text = button_font.render('RESTART', True, BUTTON_TEXT)
     restart_surface = pygame.Surface((restart_text.get_size()[0] + 20, restart_text.get_size()[1] + 20))
     restart_surface.fill(BUTTON_SURFACE)
     restart_surface.blit(restart_text, (10, 10))
@@ -76,13 +84,6 @@ def game_over():  # UI display when game over
 
     YAY = True
     while YAY:
-        # for event in pygame.event.get():
-        #     if event.type == pygame.QUIT:
-        #         sys.exit()
-        #     if event.type == pygame.MOUSEBUTTONDOWN:
-        #         if restart_rectangle.collidepoint(event.pos):
-        #             return
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit() # exit
@@ -102,15 +103,18 @@ def game_over():  # UI display when game over
 
 
 def game_win():  # UI display when game win
+    # screen, caption, background
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption(CAPTION)
     screen.fill(BACKGROUND)
 
-    title_surface = start_title_font.render('You Win!', 0, TITLE_TEXT)
+    # You Win! message
+    title_surface = start_title_font.render('You Win :D', True, TITLE_TEXT)
     title_rectangle = title_surface.get_rect(center=(width // 2, height // 2 - 150))
     screen.blit(title_surface, title_rectangle)
 
-    exit_text = button_font.render('EXIT', 0, BUTTON_TEXT)
+    # Exit button
+    exit_text = button_font.render('EXIT', True, BUTTON_TEXT)
     exit_surface = pygame.Surface((exit_text.get_size()[0] + 20, exit_text.get_size()[1] + 20))
     exit_surface.fill(BUTTON_SURFACE)
     exit_surface.blit(exit_text, (10, 10))
@@ -129,7 +133,6 @@ def game_win():  # UI display when game win
 
 
 def buttons(screen):  # UI display for in game buttons
-    button_font = pygame.font.Font(None, 25)
 
     # reset button
     reset_text = button_font.render('RESET', True, BUTTON_TEXT)

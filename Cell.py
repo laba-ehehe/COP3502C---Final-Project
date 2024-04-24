@@ -1,3 +1,4 @@
+
 import pygame
 from const import *
 
@@ -43,21 +44,21 @@ class Cell:  # This class represents a single cell in the Sudoku board. There ar
 
         # preset numbers are black
         if self.value != 0 and not self.sketch:
-            surface = font.render(str(self.value), 0, PRESET)
+            surface = font.render(str(self.value), 0, PRESET) # Render cell value
             rectangle = surface.get_rect(center=((self.row * (width / 9) + (width / 18)), (self.col * (width / 9) + (width / 18))))
-            self.screen.blit(surface, rectangle)
+            self.screen.blit(surface, rectangle) # Draw cell value
 
         # input numbers will be gray
         if self.value != 0 and self.sketch:
-            surface = font.render(str(self.value), 0, USER)
+            surface = font.render(str(self.value), 0, USER) # Render cell value
             rectangle = surface.get_rect(center=((self.row * (width / 9) + (width / 18)), (self.col * (width / 9) + (width / 18))))
-            self.screen.blit(surface, rectangle)
+            self.screen.blit(surface, rectangle) # Draw cell value
 
         # if 0 is enter, nothing will display
         if self.value == 0:
-            surface = font.render(' ', True, BACKGROUND)
+            surface = font.render(' ', True, BACKGROUND) # Render cell value
             rectangle = surface.get_rect(center=((self.row * (width / 9) + (width / 18)), (self.col * (width / 9) + (width / 18))))
-            self.screen.blit(surface, rectangle)
+            self.screen.blit(surface, rectangle) # Draw cell value
 
     def set_value(self, value):
         self.value = value
