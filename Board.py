@@ -42,16 +42,16 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
     def draw(self):  # Draws an outline of the Sudoku grid, with bold lines to delineate the 3x3 boxes. Draws every cell on this board.
         for i in range(0, 10):  # draw vertical lines, every 3rd bold
             if i % 3 == 0:
-                pygame.draw.line(self.screen, BLACK, (i * (width / 9), 0), (i * (width / 9), width), BOLD)
+                pygame.draw.line(self.screen, BORDER, (i * (width / 9), 0), (i * (width / 9), width), BOLD)
             else:
-                pygame.draw.line(self.screen, BLACK, (i * (width / 9), 0), (i * (width / 9), width), LIGHT)
+                pygame.draw.line(self.screen, BORDER, (i * (width / 9), 0), (i * (width / 9), width), LIGHT)
 
             # draws the horizontal lines every 3rd bolded
         for j in range(0, 10):
             if j % 3 == 0:
-                pygame.draw.line(self.screen, BLACK, (0, j * (width / 9)), (width, j * (width / 9)), BOLD)
+                pygame.draw.line(self.screen, BORDER, (0, j * (width / 9)), (width, j * (width / 9)), BOLD)
             else:
-                pygame.draw.line(self.screen, BLACK, (0, j * (width / 9)), (width, j * (width / 9)), LIGHT)
+                pygame.draw.line(self.screen, BORDER, (0, j * (width / 9)), (width, j * (width / 9)), LIGHT)
 
         for row in self.cell: # draw cells
             for cell in row:
@@ -59,10 +59,10 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
 
     def select(self, row, col):  # Marks the cell at (row, col) in the board as the current selected cell. Once a cell has been selected, the user can edit its value or sketched value.
         # draw border around selected cell
-        pygame.draw.line(self.screen, PINK, (row * (width / 9), col * (width / 9)), (row * (width / 9), (col + 1) * (width / 9)), BOLD)
-        pygame.draw.line(self.screen, PINK, (row * (width / 9), (col + 1) * (width / 9)), ((row + 1) * (width / 9), (col + 1) * (width / 9)), BOLD)
-        pygame.draw.line(self.screen, PINK, ((row + 1) * (width / 9), col * (width / 9)), ((row + 1) * (width / 9), (col + 1) * (width / 9)), BOLD)
-        pygame.draw.line(self.screen, PINK, (row * (width / 9), col * (width / 9)), ((row + 1) * (width / 9), col * (width / 9)), BOLD)
+        pygame.draw.line(self.screen, SELECT, (row * (width / 9), col * (width / 9)), (row * (width / 9), (col + 1) * (width / 9)), BOLD)
+        pygame.draw.line(self.screen, SELECT, (row * (width / 9), (col + 1) * (width / 9)), ((row + 1) * (width / 9), (col + 1) * (width / 9)), BOLD)
+        pygame.draw.line(self.screen, SELECT, ((row + 1) * (width / 9), col * (width / 9)), ((row + 1) * (width / 9), (col + 1) * (width / 9)), BOLD)
+        pygame.draw.line(self.screen, SELECT, (row * (width / 9), col * (width / 9)), ((row + 1) * (width / 9), col * (width / 9)), BOLD)
 
         self.selected = self.cell[row][col]
 
