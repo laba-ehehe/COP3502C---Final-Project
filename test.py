@@ -167,7 +167,9 @@ def buttons(screen):  # UI display for in game buttons
     screen.blit(exit_surface, exit_rectangle)
 
     pygame.display.update()
+    return reset_rectangle, restart_rectangle, exit_rectangle
 
+reset_rectangle, restart_rectangle, exit_rectangle = buttons(screen)
 difficulty = game_start()
 screen = pygame.display.set_mode((width, height))
 screen.fill(BACKGROUND)
@@ -187,33 +189,11 @@ while True:
             current_board.draw()
             x, y = event.pos
 
-            # if exit_rectangle.collidepoint(event.pos):  # user press exit
-            #     pygame.quit()
-            #     sys.exit()
-            #
-            # elif restart_rectangle.collidepoint(event.pos):  # user press restart
-            #     difficulty = game_start()
-            #     screen = pygame.display.set_mode((width, height))
-            #     pygame.display.set_caption(CAPTION)
-            #     screen.fill(BACKGROUND)
-            #
-            #     current_board = Board(width, width, screen, difficulty)
-            #     current_board.draw()
-            #     buttons(screen)
-            #     pygame.display.update()
-            #
-            # elif reset_rectangle.collidepoint(event.pos):  # user press reset
-            #     current_board.reset_to_original()
-            #     screen.fill(BACKGROUND)
-            #     current_board.draw()
-            #     buttons(screen)
-            #     pygame.display.update()
-
-            if 375 <= x <= 425 and 614.5 <= y <= 645.5:  # user press exit
+            if exit_rectangle.collidepoint(event.pos):  # user press exit
                 pygame.quit()
                 sys.exit()
 
-            elif 257.5 <= x <= 347.5 and 614.5 <= y <= 645.5:  # user press restart
+            elif restart_rectangle.collidepoint(event.pos):  # user press restart
                 difficulty = game_start()
                 screen = pygame.display.set_mode((width, height))
                 pygame.display.set_caption(CAPTION)
@@ -224,13 +204,13 @@ while True:
                 buttons(screen)
                 pygame.display.update()
 
-
-            elif 167.5 <= x <= 232.5 and 614.5 <= y <= 645.5:  # user press reset
+            elif reset_rectangle.collidepoint(event.pos):  # user press reset
                 current_board.reset_to_original()
                 screen.fill(BACKGROUND)
                 current_board.draw()
                 buttons(screen)
                 pygame.display.update()
+
 
             else:
                 try:
