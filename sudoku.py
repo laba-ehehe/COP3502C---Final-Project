@@ -4,10 +4,10 @@ from Board import Board
 from const import *
 
 
-def game_start():
+def game_start():  # UI display when game start
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption(CAPTION)
-    screen.fill(WHITE)
+    screen.fill(BACKGROUND)
 
     title_surface = start_title_font.render('SUDOKU', True, TITLE_TEXT)
     title_rectangle = title_surface.get_rect(center=(width // 2, 100))
@@ -53,7 +53,7 @@ def game_start():
         pygame.display.update()
 
 
-def game_over():
+def game_over():  # UI display when game over
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption(CAPTION)
     screen.fill(BACKGROUND)
@@ -101,7 +101,7 @@ def game_over():
                     YAY = False
 
 
-def game_win():
+def game_win():  # UI display when game win
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption(CAPTION)
     screen.fill(BACKGROUND)
@@ -128,7 +128,7 @@ def game_win():
                     sys.exit()
 
 
-def buttons(screen):
+def buttons(screen):  # UI display for in game buttons
     button_font = pygame.font.Font(None, 25)
 
     # reset button

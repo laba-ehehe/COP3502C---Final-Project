@@ -5,10 +5,10 @@ from const import *
 class Cell:  # This class represents a single cell in the Sudoku board. There are 81 Cells in a Board.
     def __init__(self, value, row, col, screen):
         self.value = value
-        self.initial = value
         self.row = row
         self.col = col
         self.screen = screen
+        self.initial = value
         self.sketch = False
 
         # determine which cell are preset and which cell take input
@@ -41,26 +41,22 @@ class Cell:  # This class represents a single cell in the Sudoku board. There ar
 
         font = pygame.font.Font(None, 50)
 
-        # if there is a nonzero value, and it is not a sketch, then the color will be black
+        # preset numbers are black
         if self.value != 0 and not self.sketch:
-            surface = font.render(str(self.value), 0, BLACK)
-            rectangle = surface.get_rect(center=((self.row * (600 / 9) + (600 / 18)), (self.col * (600 / 9) + (600 / 18))))
+            surface = font.render(str(self.value), 0, PRESET)
+            rectangle = surface.get_rect(center=((self.row * (width / 9) + (width / 18)), (self.col * (width / 9) + (width / 18))))
             self.screen.blit(surface, rectangle)
 
-        # if there is a nonzero value, and it is a sketch, then the color will be grey
+        # input numbers will be gray
         if self.value != 0 and self.sketch:
-            surface = font.render(str(self.value), 0, GRAY)
-            rectangle = surface.get_rect(center=((self.row * (600 / 9) + (600 / 18)), (self.col * (600 / 9) + (600 / 18))))
+            surface = font.render(str(self.value), 0, USER)
+            rectangle = surface.get_rect(center=((self.row * (width / 9) + (width / 18)), (self.col * (width / 9) + (width / 18))))
             self.screen.blit(surface, rectangle)
-        # if self.value != 0 and self.sketch:
-        #     surface = font.render(str(self.value), 0, GRAY)
-        #     rectangle = surface.get_rect(center=((self.row * (600 / 9) + 25), (self.col * (600 / 9) + 25)))
-        #     self.screen.blit(surface, rectangle)
 
         # if 0 is enter, nothing will display
         if self.value == 0:
-            surface = font.render(' ', True, WHITE)
-            rectangle = surface.get_rect(center=((self.row * (600 / 9) + (600 / 18)), (self.col * (600 / 9) + (600 / 18))))
+            surface = font.render(' ', True, BACKGROUND)
+            rectangle = surface.get_rect(center=((self.row * (width / 9) + (width / 18)), (self.col * (width / 9) + (width / 18))))
             self.screen.blit(surface, rectangle)
 
     def set_value(self, value):

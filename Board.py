@@ -25,7 +25,7 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
         self.cell = []
         self.original = []
         self.selected = None
-        self.test_board = copy.deepcopy(self.board)
+        # self.test_board = copy.deepcopy(self.board)
 
         for row_index, row_value in enumerate(self.board):
             current_row = []
@@ -42,16 +42,16 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
     def draw(self):  # Draws an outline of the Sudoku grid, with bold lines to delineate the 3x3 boxes. Draws every cell on this board.
         for i in range(0, 10):  # draw vertical lines, every 3rd bold
             if i % 3 == 0:
-                pygame.draw.line(self.screen, BORDER, (i * (width / 9), 0), (i * (width / 9), width), BOLD)
+                pygame.draw.line(self.screen, GRID, (i * (width / 9), 0), (i * (width / 9), width), BOLD)
             else:
-                pygame.draw.line(self.screen, BORDER, (i * (width / 9), 0), (i * (width / 9), width), LIGHT)
+                pygame.draw.line(self.screen, GRID, (i * (width / 9), 0), (i * (width / 9), width), LIGHT)
 
             # draws the horizontal lines every 3rd bolded
         for j in range(0, 10):
             if j % 3 == 0:
-                pygame.draw.line(self.screen, BORDER, (0, j * (width / 9)), (width, j * (width / 9)), BOLD)
+                pygame.draw.line(self.screen, GRID, (0, j * (width / 9)), (width, j * (width / 9)), BOLD)
             else:
-                pygame.draw.line(self.screen, BORDER, (0, j * (width / 9)), (width, j * (width / 9)), LIGHT)
+                pygame.draw.line(self.screen, GRID, (0, j * (width / 9)), (width, j * (width / 9)), LIGHT)
 
         for row in self.cell: # draw cells
             for cell in row:
