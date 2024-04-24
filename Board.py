@@ -44,8 +44,7 @@ class Board:  # This class represents an entire Sudoku board. A Board object has
             else:
                 pygame.draw.line(self.screen, GRID, (i * (width / 9), 0), (i * (width / 9), width), LIGHT)
 
-            # draws the horizontal lines every 3rd bolded
-        for j in range(0, 10):
+        for j in range(0, 10): # draws the horizontal lines every 3rd bolded
             if j % 3 == 0:
                 pygame.draw.line(self.screen, GRID, (0, j * (width / 9)), (width, j * (width / 9)), BOLD)
             else:
