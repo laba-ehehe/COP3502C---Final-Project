@@ -37,7 +37,6 @@ USER = GRAY
 # USER = (72, 133, 153)
 
 
-
 # Dimensions
 width, height = 600, 700
 

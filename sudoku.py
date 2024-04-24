@@ -169,6 +169,7 @@ def buttons(screen):  # UI display for in game buttons
     pygame.display.update()
     return reset_rectangle, restart_rectangle, exit_rectangle
 
+
 reset_rectangle, restart_rectangle, exit_rectangle = buttons(screen)
 difficulty = game_start()
 screen = pygame.display.set_mode((width, height))
@@ -177,6 +178,7 @@ screen.fill(BACKGROUND)
 current_board = Board(width, width, screen, difficulty)
 current_board.draw()
 buttons(screen)
+
 
 while True:
     for event in pygame.event.get():
@@ -210,7 +212,6 @@ while True:
                 current_board.draw()
                 buttons(screen)
                 pygame.display.update()
-
 
             else:
                 try:
