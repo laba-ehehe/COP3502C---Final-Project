@@ -1,295 +1,250 @@
-import random
-import math
+import pygame
+import sys
+from Board import Board
+from const import *
 
 
-class SudokuGenerator:
-    def __init__(self, row_length, removed_cells):
-        self.row_length = row_length
-        self.removed_cells = removed_cells
-        self.board = []
-        self.box_length = int(math.sqrt(row_length))
+def game_start():  # UI display when game start
+    screen = pygame.display.set_mode((width, height))
+    pygame.display.set_caption(CAPTION)
+    screen.fill(BACKGROUND)
 
-        row_count, col_count = row_length, row_length
+    title_surface = start_title_font.render('SUDOKU', True, TITLE_TEXT)
+    title_rectangle = title_surface.get_rect(center=(width // 2, 100))
+    screen.blit(title_surface, title_rectangle)
 
-        # Create a list represent Sudoku board with all values set to 0
-        while row_count > 0:
-            new = []
-            while col_count > 0:
-                new.append(0)
-                col_count -= 1
-            self.board.append(new)
-            col_count = row_length
-            row_count -= 1
+    game_surface = game_font.render('Select Game Mode:', True, TITLE_TEXT)
+    game_rectangle = game_surface.get_rect(center=(width // 2, height // 2 + 50))
+    screen.blit(game_surface, game_rectangle)
 
-    def get_board(self):
-        return self.board
+    easy_text = button_font.render('Easy', 0, BUTTON_TEXT)
+    easy_surface = pygame.Surface((easy_text.get_size()[0] + 20, easy_text.get_size()[1] + 20))
+    easy_surface.fill(BUTTON_SURFACE)
+    easy_surface.blit(easy_text, (10, 10))
+    easy_rectangle = easy_surface.get_rect(center=(width // 2 - 200, height // 2 + 200))
+    screen.blit(easy_surface, easy_rectangle)
 
-    def print_board(self):
-        for index, item in enumerate(self.board):
-            print(self.board[index])
+    medium_text = button_font.render('Medium', 0, BUTTON_TEXT)
+    medium_surface = pygame.Surface((medium_text.get_size()[0] + 20, medium_text.get_size()[1] + 20))
+    medium_surface.fill(BUTTON_SURFACE)
+    medium_surface.blit(medium_text, (10, 10))
+    medium_rectangle = medium_surface.get_rect(center=(width // 2, height // 2 + 200))
+    screen.blit(medium_surface, medium_rectangle)
 
-    def valid_in_row(self, row, num): # Invalid if a match is found in row
-        for i in self.board[row]:
-            if i == num:
-                return False
-        return True
+    hard_text = button_font.render('Hard', 0, BUTTON_TEXT)
+    hard_surface = pygame.Surface((hard_text.get_size()[0] + 20, hard_text.get_size()[1] + 20))
+    hard_surface.fill(BUTTON_SURFACE)
+    hard_surface.blit(hard_text, (10, 10))
+    hard_rectangle = hard_surface.get_rect(center=(width // 2 + 200, height // 2 + 200))
+    screen.blit(hard_surface, hard_rectangle)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if easy_rectangle.collidepoint(event.pos):
+                    return 'EASY'
+                elif medium_rectangle.collidepoint(event.pos):
+                    return 'MEDIUM'
+                elif hard_rectangle.collidepoint(event.pos):
+                    return 'HARD'
+
+        pygame.display.update()
 
 
-    def valid_in_col(self, col, num): # Invalid if a match is found in col
-        count = 0
-        while count < 9:
-            if self.board[count][col] == num:
-                return False
-            count += 1
-        return True
+def game_over():  # UI display when game over
+    screen = pygame.display.set_mode((width, height))
+    pygame.display.set_caption(CAPTION)
+    screen.fill(BACKGROUND)
 
-    def valid_in_box(self, row_start, col_start, num): # Invalid if a match is found in box
-        for r in self.board[int(row_start):int(row_start) + 3]:
-            if num in r[int(col_start):int(col_start) + 3]:
-                return False
-        return True
+    # Game Over message
+    title_surface = start_title_font.render('Game Over D:', 0, TITLE_TEXT)
+    title_rectangle = title_surface.get_rect(center=(width // 2, height // 2 - 150))
+    screen.blit(title_surface, title_rectangle)
 
-    def is_valid(self, row, col, num):
-        # Returns False if not valid in row or col
-        if not self.valid_in_row(row, num) or not self.valid_in_col(col, num):
-            return False
+    # Restart button
+    restart_text = button_font.render('RESTART', 0, BUTTON_TEXT)
+    restart_surface = pygame.Surface((restart_text.get_size()[0] + 20, restart_text.get_size()[1] + 20))
+    restart_surface.fill(BUTTON_SURFACE)
+    restart_surface.blit(restart_text, (10, 10))
+    restart_rectangle = restart_surface.get_rect(center=(width // 2, height // 2 + 100))
+    screen.blit(restart_surface, restart_rectangle)
 
-        row_start_ind = row // 3 * 3
-        col_start_ind = col // 3 * 3
+    # Update display
+    pygame.display.update()
 
-        if not self.valid_in_box(row_start_ind, col_start_ind, num):
-            return False
-        return True # all tests passed
+    YAY = True
+    while YAY:
+        # for event in pygame.event.get():
+        #     if event.type == pygame.QUIT:
+        #         sys.exit()
+        #     if event.type == pygame.MOUSEBUTTONDOWN:
+        #         if restart_rectangle.collidepoint(event.pos):
+        #             return
 
-    def fill_box(self, row_start, col_start):
-        self.row_start = row_start
-        self.col_start = col_start
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit() # exit
 
-        unused = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        row_count = 3
+            if event.type == pygame.MOUSEBUTTONDOWN: # restart selection
+                if restart_rectangle.collidepoint(event.pos): # reset display
+                    difficulty = game_start()
+                    screen = pygame.display.set_mode((width, height))
+                    pygame.display.set_caption(CAPTION)
+                    screen.fill(WHITE)
 
-        while row_count > 0:
-            col_count = 3
-            while col_count > 0:
-                random.shuffle(unused)
-                random_num = unused.pop()
+                    current_board = Board(width, width, screen, difficulty)
+                    current_board.draw()
+                    buttons(screen)
+                    pygame.display.update()
+                    YAY = False
 
-                self.board[int(self.row_start)][int(self.col_start)] = random_num
-                self.col_start += 1
-                col_count -= 1
-            self.row_start += 1
-            self.col_start = col_start
-            row_count -= 1
 
-    def fill_diagonal(self):
-        # Calls fill_box method and passes in the starting index for each diagonal box.
-        self.fill_box(0, 0)
-        self.fill_box(3, 3)
-        self.fill_box(6, 6)
+def game_win():  # UI display when game win
+    screen = pygame.display.set_mode((width, height))
+    pygame.display.set_caption(CAPTION)
+    screen.fill(BACKGROUND)
 
-    def fill_remaining(self, row, col):
-        if (col >= self.row_length and row < self.row_length - 1):
-            row += 1
-            col = 0
-        if row >= self.row_length and col >= self.row_length:
-            return True
-        if row < self.box_length:
-            if col < self.box_length:
-                col = self.box_length
-        elif row < self.row_length - self.box_length:
-            if col == int(row // self.box_length * self.box_length):
-                col += self.box_length
-        else:
-            if col == self.row_length - self.box_length:
-                row += 1
-                col = 0
-                if row >= self.row_length:
-                    return True
+    title_surface = start_title_font.render('You Win!', 0, TITLE_TEXT)
+    title_rectangle = title_surface.get_rect(center=(width // 2, height // 2 - 150))
+    screen.blit(title_surface, title_rectangle)
 
-        for num in range(1, self.row_length + 1):
-            if self.is_valid(row, col, num):
-                self.board[row][col] = num
-                if self.fill_remaining(row, col + 1):
-                    return True
-                self.board[row][col] = 0
-        return False
+    exit_text = button_font.render('EXIT', 0, BUTTON_TEXT)
+    exit_surface = pygame.Surface((exit_text.get_size()[0] + 20, exit_text.get_size()[1] + 20))
+    exit_surface.fill(BUTTON_SURFACE)
+    exit_surface.blit(exit_text, (10, 10))
+    exit_rectangle = exit_surface.get_rect(center=(width // 2, height // 2 + 100))
+    screen.blit(exit_surface, exit_rectangle)
 
-    def fill_values(self):
-        # Calls methods to replace placeholder elements.
-        self.fill_diagonal()
-        self.fill_remaining(0, self.box_length)
+    pygame.display.update()
 
-    def remove_cells(self):
-        temp = self.removed_cells
-        while temp >= 1: # select a random cell
-            row = random.randint(0, 8)
-            col = random.randint(0, 8)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if exit_rectangle.collidepoint(event.pos):
+                    sys.exit()
 
-            if self.board[row][col] != 0: # check if cell is zero
-                self.board[row][col] = 0
-                temp -= 1
+
+def buttons(screen):  # UI display for in game buttons
+    button_font = pygame.font.Font(None, 25)
+
+    # reset button
+    reset_text = button_font.render('RESET', True, BUTTON_TEXT)
+    reset_surface = pygame.Surface((65, 31))
+    reset_surface.fill(BUTTON_SURFACE)
+    reset_surface.blit(reset_text, (5, 5))
+    reset_rectangle = reset_surface.get_rect(center=(175, 650))
+    screen.blit(reset_surface, reset_rectangle)
+
+    # restart button
+    restart_text = button_font.render('RESTART', 0, BUTTON_TEXT)
+    restart_surface = pygame.Surface((85, 31))
+    restart_surface.fill(BUTTON_SURFACE)
+    restart_surface.blit(restart_text, (5, 5))
+    restart_rectangle = restart_surface.get_rect(center=(300, 650))
+    screen.blit(restart_surface, restart_rectangle)
+
+    # exit button
+    exit_text = button_font.render('EXIT', 0, BUTTON_TEXT)
+    exit_surface = pygame.Surface((50, 31))
+    exit_surface.fill(BUTTON_SURFACE)
+    exit_surface.blit(exit_text, (5, 5))
+    exit_rectangle = exit_surface.get_rect(center=(425, 650))
+    screen.blit(exit_surface, exit_rectangle)
+
+    pygame.display.update()
+
+pygame.init()
+start_title_font = pygame.font.Font(None, 100)
+game_font = pygame.font.Font(None, 80)
+button_font = pygame.font.Font(None, 70)
+
+difficulty = game_start()
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption(CAPTION)
+screen.fill(BACKGROUND)
+
+current_board = Board(width, width, screen, difficulty)
+current_board.draw()
+buttons(screen)
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            screen.fill(BACKGROUND)
+            current_board.draw()
+            x, y = event.pos
+
+            if 375 <= x <= 425 and 614.5 <= y <= 645.5:  # user press exit
+                pygame.quit()
+                sys.exit()
+
+            elif 257.5 <= x <= 347.5 and 614.5 <= y <= 645.5:  # user press restart
+                difficulty = game_start()
+                screen = pygame.display.set_mode((width, height))
+                pygame.display.set_caption(CAPTION)
+                screen.fill(BACKGROUND)
+
+                current_board = Board(width, width, screen, difficulty)
+                current_board.draw()
+                buttons(screen)
+                pygame.display.update()
+
+
+            elif 167.5 <= x <= 232.5 and 614.5 <= y <= 645.5:  # user press reset
+                current_board.reset_to_original()
+                screen.fill(BACKGROUND)
+                current_board.draw()
+                buttons(screen)
+                pygame.display.update()
+
             else:
+                try:
+                    coordinates = current_board.click(x, y)
+                    current_board.select(coordinates[0], coordinates[1])
+                    buttons(screen)
+                    pygame.display.update()
+                except:
+                    pass
+
+        if event.type == pygame.KEYDOWN:
+            try:
+                if event.key == pygame.K_BACKSPACE:
+                    current_board.clear()
+                    screen.fill(BACKGROUND)
+                    current_board.draw()
+                    buttons(screen)
+                    pygame.display.update()
+
+                elif 1 <= int(pygame.key.name(event.key)[-1]) <= 9:
+                    guess = int(pygame.key.name(event.key)[-1])
+                    current_board.sketch(guess)
+                    current_board.place_number(guess)
+                    current_board.update_board()
+                    screen.fill(BACKGROUND)
+                    current_board.draw()
+                    buttons(screen)
+                    pygame.display.update()
+            except:
                 pass
 
-
-def generate_sudoku(size, removed):
-    sudoku = SudokuGenerator(size, removed)
-    sudoku.fill_values()
-    board = sudoku.get_board()
-    sudoku.remove_cells()
-    board = sudoku.get_board()
-    return board
-
-
-# class SudokuGenerator:
-#     def __init__(self, row_length=9, removed_cells=20):  # row length is always 9, and removed_cells defaults to 30 unless otherwise changed
-#         self.row_length = row_length
-#         self.removed_cells = removed_cells
-#         self.board = [[0] * row_length for i in range(row_length)] #initializes a 2D list
-#         self.box_length = int(math.sqrt(row_length))
-#
-#     def get_board(self):  # returns a 2D python list of numbers, which represents the board
-#         return self.board
-#
-#     def print_board(self):  # displays the board to the console.
-#         # for i in self.board:
-#         #     print(" ".join(self.board[i]))
-#         for index, item in enumerate(self.board):
-#             print(self.board[index])
-#
-#     def valid_in_row(self, row, num):  # returns a Boolean value. Determines if num is contained in the given row of the board.
-#         for col in range(self.row_length):
-#             if num == self.board[row][col]:
-#                 return False
-#         return True
-#
-#     def valid_in_col(self, col, num):  # returns a Boolean value. Determines if num is contained in the given column of the board.
-#         for row in range(self.row_length):
-#             if num == self.board[row][col]:
-#                 return False
-#         return True
-#
-#     def valid_in_box(self, row_start, col_start, num):  # returns a Boolean value. Determines if num is contained in the 3x3 box from (row_start, col_start) to (row_start+2, col_start+2)
-#         for row in range(3):
-#             for col in range(3):
-#                 if self.board[row_start + row][col_start + col] == num:
-#                     return False
-#         return True
-#
-#     def is_valid(self, row, col, num):  # returns if it is valid to enter num at (row, col) in the board. This is done by checking the appropriate row, column, and box.
-#         if self.valid_in_row(row, num):
-#             if self.valid_in_col(col, num):
-#                 if self.valid_in_box(row - row % 3, col - col % 3, num):
-#                     return True
-#         return False
-#
-#     def fill_box(self, row_start, col_start):  # randomly fills in values in the 3x3 box from (row_start, col_start) to (row_start+2, col_start+2). Uses unused_in_box to ensure no value occurs in the box more than once.
-#         for row in range(self.box_length):
-#             for col in range(self.box_length):
-#                 while True:
-#                     num = random.randint(1, 9)  # generates a random value from 1 to 9
-#                     if self.valid_in_box(row_start, col_start, num):
-#                         self.board[row_start + row][col_start + col] = num
-#                         break
-#     def fill_diagonal(self):  # fills the three boxes along the main diagonal of the board. This is the first major step in generating a Sudoku.
-#         for num in range(0, self.row_length, 3):
-#             self.fill_box(num, num)
-#
-#     def fill_remaining(self, row, col): # This will return a completely filled board (the Sudoku solution).
-#         if col >= self.row_length and row < self.row_length - 1:
-#             row += 1
-#             col = 0
-#
-#         if row >= self.row_length and col >= self.row_length:
-#             return True
-#
-#         if row < 3:
-#             if col < 3:
-#                 col = 3
-#
-#         elif row < self.row_length - 3:
-#             if col == int(row // 3 * 3):
-#                 col += 3
-#
-#         else:
-#             if col == self.row_length - 3:
-#                 row += 1
-#                 col = 0
-#                 if row >= self.row_length:
-#                     return True
-#
-#         for num in range(1, self.row_length + 1):
-#             if self.is_valid(row, col, num):
-#                 self.board[row][col] = num
-#                 if self.fill_remaining(row, col + 1):
-#                     return True
-#                 self.board[row][col] = 0
-#         return False
-#
-#         # if (col >= self.row_length and row < self.row_length - 1):
-#         #     row += 1
-#         #     col = 0
-#         # if row >= self.row_length and col >= self.row_length:
-#         #     return True
-#         # if row < self.box_length:
-#         #     if col < self.box_length:
-#         #         col = self.box_length
-#         # elif row < self.row_length - self.box_length:
-#         #     if col == int(row // self.box_length * self.box_length):
-#         #         col += self.box_length
-#         # else:
-#         #     if col == self.row_length - self.box_length:
-#         #         row += 1
-#         #         col = 0
-#         #         if row >= self.row_length:
-#         #             return True
-#         #
-#         # for num in range(1, self.row_length + 1):
-#         #     if self.is_valid(row, col, num):
-#         #         self.board[row][col] = num
-#         #         if self.fill_remaining(row, col + 1):
-#         #             return True
-#         #         self.board[row][col] = 0
-#         # return False
-#
-#     def fill_values(self):  # it constructs a solution by calling fill_diagonal and fill_remaining.
-#         self.fill_diagonal()
-#         self.fill_remaining(0, self.box_length)
-#
-#     def remove_cells(self):  # this method removes the appropriate number of cells from the board
-#         cells = self.removed_cells
-#         while cells > 0:
-#             row = random.randint(0, self.row_length - 1)
-#             col = random.randint(0, self.row_length - 1)
-#             if self.board[row][col] != 0:
-#                 cells -= 1
-#                 self.board[row][col] = 0
-#
-#     def answer(board):
-#         answer = []
-#         for i in range(len(board)):
-#             temp = []
-#             for j in range(len(board[i])):
-#                 temp.append(board[i][j])
-#             answer.append(temp)
-#         return answer
-#
-#
-# def generate_sudoku(size, removed): # Given size and removed, this function generates and returns a size-by-size sudoku board.
-#     sudoku = SudokuGenerator(size, removed)
-#     sudoku.fill_values()
-#     sudoku.remove_cells()
-#     board = sudoku.get_board()
-#     return board
-#
-#     # sudoku = SudokuGenerator(size, removed)
-#     # sudoku.fill_values()
-#     # board = sudoku.get_board()
-#     # answer = answer(board)
-#     # sudoku.remove_cells()
-#     # board = sudoku.get_board()
-#     # print(*board, sep="\n")
-#     # print("")
-#     # print(*answer, sep="\n")
-#     # print("\n\n")
-#     # return board, answer
+        current_board.update_board()
+        if current_board.is_full():
+            if current_board.check_board():
+                game_win()
+            else:
+                game_over()
+                screen = pygame.display.set_mode((width, height))
+                pygame.display.set_caption(CAPTION)
+                screen.fill(BACKGROUND)
+                current_board = Board(width, width, screen, difficulty)
+                current_board.draw()
+                buttons(screen)
+                pygame.display.update()
