@@ -3,6 +3,13 @@ import sys
 from Board import Board
 from const import *
 
+pygame.init()
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption(CAPTION)
+start_title_font = pygame.font.Font(None, 100)
+game_font = pygame.font.Font(None, 80)
+button_font = pygame.font.Font(None, 70)
+
 
 def game_start():  # UI display when game start
     # screen, caption, background
@@ -133,6 +140,7 @@ def game_win():  # UI display when game win
 
 
 def buttons(screen):  # UI display for in game buttons
+    button_font = pygame.font.Font(None, 25)
 
     # reset button
     reset_text = button_font.render('RESET', True, BUTTON_TEXT)
@@ -160,14 +168,8 @@ def buttons(screen):  # UI display for in game buttons
 
     pygame.display.update()
 
-pygame.init()
-start_title_font = pygame.font.Font(None, 100)
-game_font = pygame.font.Font(None, 80)
-button_font = pygame.font.Font(None, 70)
-
 difficulty = game_start()
 screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption(CAPTION)
 screen.fill(BACKGROUND)
 
 current_board = Board(width, width, screen, difficulty)
@@ -184,6 +186,28 @@ while True:
             screen.fill(BACKGROUND)
             current_board.draw()
             x, y = event.pos
+
+            # if exit_rectangle.collidepoint(event.pos):  # user press exit
+            #     pygame.quit()
+            #     sys.exit()
+            #
+            # elif restart_rectangle.collidepoint(event.pos):  # user press restart
+            #     difficulty = game_start()
+            #     screen = pygame.display.set_mode((width, height))
+            #     pygame.display.set_caption(CAPTION)
+            #     screen.fill(BACKGROUND)
+            #
+            #     current_board = Board(width, width, screen, difficulty)
+            #     current_board.draw()
+            #     buttons(screen)
+            #     pygame.display.update()
+            #
+            # elif reset_rectangle.collidepoint(event.pos):  # user press reset
+            #     current_board.reset_to_original()
+            #     screen.fill(BACKGROUND)
+            #     current_board.draw()
+            #     buttons(screen)
+            #     pygame.display.update()
 
             if 375 <= x <= 425 and 614.5 <= y <= 645.5:  # user press exit
                 pygame.quit()
