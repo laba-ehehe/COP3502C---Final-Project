@@ -1,5 +1,5 @@
 import pygame
-from SudokuGenerator import generate_sudoku
+from sudoku_generator import SudokuGenerator, generate_sudoku
 from Cell import Cell
 from const import *
 
