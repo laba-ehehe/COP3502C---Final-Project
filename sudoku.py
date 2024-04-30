@@ -75,7 +75,7 @@ def game_over():  # UI display when game over
     screen.fill(BACKGROUND)
 
     # Game Over message
-    title_surface = start_title_font.render('You Lose :D', True, TITLE_TEXT)
+    title_surface = start_title_font.render('You Lose D:', True, TITLE_TEXT)
     title_rectangle = title_surface.get_rect(center=(width // 2, height // 2 - 150))
     screen.blit(title_surface, title_rectangle)
 
